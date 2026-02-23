@@ -62,6 +62,17 @@ export default function IncomingRequests({ currentUser }) {
                     }
                 }
             )
+            .on(
+                'postgres_changes',
+                { event: 'UPDATE', schema: 'public', table: 'chat_requests', filter: `sender_id=eq.${currentUser.id}` },
+                (payload) => {
+                    const req = payload.new;
+                    if (req.status === 'accepted' && req.conversation_id) {
+                        const locale = window.location.pathname.split('/')[1] || 'en';
+                        router.push(`/${locale}/chat/${req.conversation_id}`);
+                    }
+                }
+            )
             .subscribe();
 
         return () => {

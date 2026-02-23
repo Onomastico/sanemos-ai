@@ -65,6 +65,16 @@ export async function PATCH(request, { params }) {
                 return NextResponse.json({ error: convError.message }, { status: 500 });
             }
 
+            // Update the request with the new conversation_id
+            const { error: convUpdateError } = await admin
+                .from('chat_requests')
+                .update({ conversation_id: conversation.id })
+                .eq('id', id);
+
+            if (convUpdateError) {
+                console.error('Error attaching conversation to request:', convUpdateError);
+            }
+
             // Insert both participants
             const { error: partError } = await admin
                 .from('conversation_participants')

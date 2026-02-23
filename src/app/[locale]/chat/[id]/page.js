@@ -492,28 +492,44 @@ export default function ChatViewPage() {
                             </div>
                         )}
 
-                        {messages.map((msg) => (
-                            <div
-                                key={msg.id}
-                                className={`${styles.messageRow} ${msg.sender_type === 'user' ? styles.messageRowUser : styles.messageRowAi}`}
-                            >
-                                {msg.sender_type !== 'user' && (
-                                    <span className={styles.messageAvatar}>
-                                        {agent?.emoji || '🤖'}
-                                    </span>
-                                )}
-                                <div>
-                                    <div
-                                        className={`${styles.messageBubble} ${msg.sender_type === 'user' ? styles.messageBubbleUser : styles.messageBubbleAi}`}
-                                    >
-                                        {renderMessageContent(msg.content)}
-                                    </div>
-                                    <div className={`${styles.messageTime} ${msg.sender_type === 'user' ? styles.messageTimeUser : ''}`}>
-                                        {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        {messages.map((msg) => {
+                            const isOwnMessage = msg.sender_id === user?.id;
+
+                            return (
+                                <div
+                                    key={msg.id}
+                                    className={`${styles.messageRow} ${isOwnMessage ? styles.messageRowUser : styles.messageRowAi}`}
+                                >
+                                    {msg.sender_type !== 'user' && (
+                                        <span className={styles.messageAvatar}>
+                                            {agent?.emoji || '🤖'}
+                                        </span>
+                                    )}
+                                    {!isOwnMessage && msg.sender_type === 'user' && (
+                                        <span className={styles.messageAvatar}>
+                                            {participants.find(p => p.user_id === msg.sender_id)?.avatar_url ? (
+                                                <img src={participants.find(p => p.user_id === msg.sender_id).avatar_url} alt="" style={{ width: '24px', height: '24px', borderRadius: '50%', objectFit: 'cover' }} />
+                                            ) : '👤'}
+                                        </span>
+                                    )}
+                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: isOwnMessage ? 'flex-end' : 'flex-start' }}>
+                                        {!isOwnMessage && msg.sender_type === 'user' && !agent && (
+                                            <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '4px', marginLeft: '4px' }}>
+                                                {participants.find(p => p.user_id === msg.sender_id)?.display_name || 'Anonymous'}
+                                            </div>
+                                        )}
+                                        <div
+                                            className={`${styles.messageBubble} ${isOwnMessage ? styles.messageBubbleUser : styles.messageBubbleAi}`}
+                                        >
+                                            {renderMessageContent(msg.content)}
+                                        </div>
+                                        <div className={`${styles.messageTime} ${isOwnMessage ? styles.messageTimeUser : ''}`}>
+                                            {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            )
+                        })}
 
                         {sending && (
                             <div className={styles.typingIndicator}>
@@ -574,15 +590,15 @@ export default function ChatViewPage() {
                     <>
                         {/* Mobile Overlay */}
                         {showParticipants && (
-                            <div 
-                                className={styles.participantsOverlay} 
+                            <div
+                                className={styles.participantsOverlay}
                                 onClick={() => setShowParticipants(false)}
                             />
                         )}
                         <div className={`${styles.participantsPanel} ${showParticipants ? styles.participantsPanelOpen : ''}`}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-sm)' }}>
                                 <h3>👥 {t('participants') || 'Participantes'}</h3>
-                                <button 
+                                <button
                                     className={`${styles.chatBackBtn} ${styles.participantsCloseBtn}`}
                                     onClick={() => setShowParticipants(false)}
                                 >
