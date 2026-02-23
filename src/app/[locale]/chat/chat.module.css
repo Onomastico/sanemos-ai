@@ -1,11 +1,11 @@
 .chatPage {
-  padding: 100px 0 var(--space-3xl);
+  padding: 80px 0 var(--space-xl);
 }
 
 .container {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 0 var(--space-lg);
+  padding: 0 var(--space-md);
 }
 
 /* Agent Section */
@@ -515,6 +515,10 @@
 }
 
 @media (max-width: 768px) {
+  .chatPage {
+    padding: 70px 0 var(--space-lg);
+  }
+
   .agentGrid {
     grid-template-columns: 1fr;
   }
@@ -529,15 +533,24 @@
 
   .searchBar {
     flex-wrap: wrap;
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  .searchBar .form-input:first-child {
+  .searchBar .form-input,
+  .searchBar .form-select,
+  .searchBar button {
     width: 100%;
+    max-width: none !important;
   }
 
   .participantsPanel {
     display: none;
     /* Hide participant panel on mobile */
+  }
+
+  .historyItem {
+    padding: var(--space-sm);
   }
 }
 

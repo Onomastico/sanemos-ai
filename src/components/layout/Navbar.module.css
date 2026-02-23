@@ -140,11 +140,15 @@
 .hamburger {
     display: none;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     gap: 5px;
     background: none;
     border: none;
     cursor: pointer;
-    padding: var(--space-sm);
+    width: 44px;
+    height: 44px;
+    padding: 0;
 }
 
 .hamburger span {
@@ -180,12 +184,15 @@
         right: 0;
         bottom: 0;
         flex-direction: column;
-        background: var(--bg-primary);
-        padding: var(--space-xl);
+        background: rgba(15, 25, 35, 0.95);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: var(--space-lg) var(--space-xl);
         gap: var(--space-sm);
         transform: translateX(100%);
         transition: transform var(--transition-base);
         align-items: stretch;
+        overflow-y: auto;
     }
 
     .navLinksOpen {
@@ -194,7 +201,7 @@
 
     .navLink {
         font-size: var(--font-size-base);
-        padding: var(--space-md);
+        padding: var(--space-sm) var(--space-md);
         text-align: left;
     }
 
