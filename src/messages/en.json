@@ -182,7 +182,15 @@
     "settingsSaved": "Settings saved successfully",
     "allLossTypes": "All loss types",
     "allWorldviews": "All perspectives",
-    "participants": "Participants"
+    "participants": "Participants",
+    "publicRoomPrompt": "Enter a name or topic for the public room:",
+    "publicRoomsTitle": "Public Rooms",
+    "noPublicRooms": "There are no public rooms created yet. Be the first to create one!",
+    "publicRoomDefaultTitle": "Public Room",
+    "requestSent": "Request sent to {name}",
+    "requestError": "Error sending request.",
+    "realPeople": "Real People",
+    "untitledConversation": "Untitled Conversation"
   },
   "therapists": {
     "title": "Therapist Directory",

@@ -85,7 +85,7 @@ export default function ChatPage() {
     };
 
     const startPublicChat = async () => {
-        const title = prompt("Escribe un nombre o tema para la sala pública:");
+        const title = prompt(t('publicRoomPrompt') || "Escribe un nombre o tema para la sala pública:");
         if (!title) return;
 
         const res = await fetch('/api/chat/conversations', {
@@ -194,9 +194,9 @@ export default function ChatPage() {
                                 body: JSON.stringify({ receiverId: targetUser.id })
                             });
                             if (res.ok) {
-                                alert(`Solicitud enviada a ${targetUser.name}`);
+                                alert(t('requestSent', { name: targetUser.name }) || `Solicitud enviada a ${targetUser.name}`);
                             } else {
-                                alert('Error al enviar solicitud.');
+                                alert(t('requestError') || 'Error al enviar solicitud.');
                             }
                         }}
                     />
@@ -204,11 +204,11 @@ export default function ChatPage() {
 
                 {/* Public Rooms Section */}
                 <section style={{ marginBottom: 'var(--space-xl)' }}>
-                    <h2>🌐 Salas Públicas</h2>
+                    <h2>🌐 {t('publicRoomsTitle') || 'Salas Públicas'}</h2>
                     {loading ? (
                         <div className="skeleton" style={{ height: '72px', borderRadius: 'var(--radius-md)' }} />
                     ) : publicRooms.length === 0 ? (
-                        <p className={styles.emptyHistory}>No hay salas públicas creadas todavía. ¡Sé el primero en crear una!</p>
+                        <p className={styles.emptyHistory}>{t('noPublicRooms') || 'No hay salas públicas creadas todavía. ¡Sé el primero en crear una!'}</p>
                     ) : (
                         <div className={styles.historyList}>
                             {publicRooms.map((room) => (
@@ -219,7 +219,7 @@ export default function ChatPage() {
                                 >
                                     <span className={styles.historyEmoji}>🌐</span>
                                     <div className={styles.historyContent}>
-                                        <span className={styles.historyTitle}>{room.title || 'Sala Pública'}</span>
+                                        <span className={styles.historyTitle}>{room.title || t('publicRoomDefaultTitle') || 'Sala Pública'}</span>
                                         <div style={{ display: 'flex', gap: 'var(--space-xs)', flexWrap: 'wrap', marginTop: 'var(--space-xs)' }}>
                                             {room.loss_type && <span className="badge badge-warm">{room.loss_type}</span>}
                                             {room.worldview && <span className="badge badge-calm">{room.worldview}</span>}
@@ -289,7 +289,7 @@ export default function ChatPage() {
 
                                     {humanSearchResults.length > 0 && (
                                         <div style={{ marginBottom: 'var(--space-lg)' }}>
-                                            <h3 style={{ marginBottom: 'var(--space-sm)' }}>👥 Real People</h3>
+                                            <h3 style={{ marginBottom: 'var(--space-sm)' }}>👥 {t('realPeople') || 'Real People'}</h3>
                                             <div className={styles.historyList}>
                                                 {humanSearchResults.map((conv) => (
                                                     <button
@@ -301,7 +301,7 @@ export default function ChatPage() {
                                                         <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', marginBottom: 'var(--space-xs)' }}>
                                                             <strong>
                                                                 <span className={styles.historyEmoji}>👥</span>
-                                                                {conv.title || 'Untitled Conversation'}
+                                                                {conv.title || t('untitledConversation') || 'Untitled Conversation'}
                                                             </strong>
                                                             <span className={styles.historyTime}>
                                                                 {new Date(conv.updated_at).toLocaleDateString()}
@@ -328,7 +328,7 @@ export default function ChatPage() {
 
                                     {aiSearchResults.length > 0 && (
                                         <div>
-                                            <h3 style={{ marginBottom: 'var(--space-sm)' }}>🤖 AI Companions</h3>
+                                            <h3 style={{ marginBottom: 'var(--space-sm)' }}>🤖 {t('title') || 'AI Companions'}</h3>
                                             <div className={styles.historyList}>
                                                 {aiSearchResults.map((conv) => (
                                                     <button
@@ -342,7 +342,7 @@ export default function ChatPage() {
                                                                 <span className={styles.historyEmoji}>
                                                                     {agentEmojis[conv.ai_agent_type]}
                                                                 </span>
-                                                                {conv.title || 'Untitled Conversation'}
+                                                                {conv.title || t('untitledConversation') || 'Untitled Conversation'}
                                                             </strong>
                                                             <span className={styles.historyTime}>
                                                                 {new Date(conv.updated_at).toLocaleDateString()}

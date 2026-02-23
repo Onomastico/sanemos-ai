@@ -182,7 +182,15 @@
         "settingsSaved": "Configuración guardada exitosamente",
         "allLossTypes": "Todos los tipos de pérdida",
         "allWorldviews": "Todas las perspectivas",
-        "participants": "Participantes"
+        "participants": "Participantes",
+        "publicRoomPrompt": "Escribe un nombre o tema para la sala pública:",
+        "publicRoomsTitle": "Salas Públicas",
+        "noPublicRooms": "No hay salas públicas creadas todavía. ¡Sé el primero en crear una!",
+        "publicRoomDefaultTitle": "Sala Pública",
+        "requestSent": "Solicitud enviada a {name}",
+        "requestError": "Error al enviar solicitud.",
+        "realPeople": "Personas Reales",
+        "untitledConversation": "Conversación sin título"
     },
     "therapists": {
         "title": "Directorio de Terapeutas",
