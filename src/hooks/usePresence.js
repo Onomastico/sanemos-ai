@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 
 export function usePresence(userInfo) {
-    const [onlineUsers, setOnlineUsers] = useState(new Map());
+    const [onlineUsers, setOnlineUsers] = useState([]);
     const supabase = createClient();
 
     useEffect(() => {
@@ -19,31 +19,27 @@ export function usePresence(userInfo) {
             },
         });
 
+        const updateStateFromPresence = () => {
+            const newState = room.presenceState();
+            const usersArray = [];
+            for (const key in newState) {
+                if (newState[key] && newState[key].length > 0) {
+                    usersArray.push(newState[key][0]); // Get the most recent state
+                }
+            }
+            // Sort by name or keep default order
+            setOnlineUsers(usersArray);
+        };
+
         room
             .on('presence', { event: 'sync' }, () => {
-                const newState = room.presenceState();
-                const users = new Map();
-                // presenceState returns an object with arrays of state objects per key
-                for (const key in newState) {
-                    if (newState[key] && newState[key].length > 0) {
-                        users.set(key, newState[key][0]); // Get the most recent state
-                    }
-                }
-                setOnlineUsers(users);
+                updateStateFromPresence();
             })
-            .on('presence', { event: 'join' }, ({ key, newPresences }) => {
-                setOnlineUsers((prev) => {
-                    const next = new Map(prev);
-                    next.set(key, newPresences[0]);
-                    return next;
-                });
+            .on('presence', { event: 'join' }, () => {
+                updateStateFromPresence();
             })
-            .on('presence', { event: 'leave' }, ({ key, leftPresences }) => {
-                setOnlineUsers((prev) => {
-                    const next = new Map(prev);
-                    next.delete(key);
-                    return next;
-                });
+            .on('presence', { event: 'leave' }, () => {
+                updateStateFromPresence();
             })
             .subscribe(async (status) => {
                 if (status === 'SUBSCRIBED') {
@@ -64,11 +60,8 @@ export function usePresence(userInfo) {
         };
     }, [userInfo, supabase]);
 
-    // Convert Map to an array of users for the UI
-    const usersArray = Array.from(onlineUsers.values());
-
     return {
-        onlineUsers: usersArray,
-        onlineCount: usersArray.length,
+        onlineUsers: onlineUsers,
+        onlineCount: onlineUsers.length,
     };
 }

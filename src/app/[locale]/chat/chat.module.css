@@ -570,6 +570,14 @@
   .historyItem {
     padding: var(--space-sm);
   }
+
+  .mobileOnlyBtn {
+    display: flex;
+  }
+
+  .mobileOnlyOverlay {
+    display: block;
+  }
 }
 
 /* Participants Panel */
@@ -759,4 +767,13 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   z-index: 50;
   text-align: left;
+}
+
+/* Mobile responsive helpers for participants panel */
+.mobileOnlyBtn {
+  display: none;
+}
+
+.mobileOnlyOverlay {
+  display: none;
 }

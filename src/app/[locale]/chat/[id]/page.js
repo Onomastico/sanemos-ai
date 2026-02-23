@@ -106,10 +106,17 @@ export default function ChatViewPage() {
 
             if (!conv?.ai_agent_type) {
                 // Load participants
-                const { data: participantsData } = await supabase
+                const { data: participantsData, error: partErr } = await supabase
                     .from('conversation_participants')
-                    .select('user_id, profiles!inner(id, display_name, avatar_url, loss_type, worldview)')
+                    .select(`
+                        user_id,
+                        profiles (id, display_name, avatar_url, loss_type, worldview)
+                    `)
                     .eq('conversation_id', conversationId);
+
+                if (partErr) {
+                    console.error("Error loading participants:", partErr);
+                }
 
                 if (participantsData) {
                     const loadedParticipants = participantsData.map(p => ({
@@ -374,7 +381,7 @@ export default function ChatViewPage() {
 
                 {!agent && (
                     <button
-                        className={`btn btn-sm ${showParticipants ? 'btn-primary' : ''}`}
+                        className={`btn btn-sm ${styles.mobileOnlyBtn} ${showParticipants ? 'btn-primary' : ''}`}
                         onClick={() => setShowParticipants(!showParticipants)}
                         title={t('participants') || 'Participants'}
                     >
@@ -505,7 +512,7 @@ export default function ChatViewPage() {
                                             {agent?.emoji || '🤖'}
                                         </span>
                                     )}
-                                    {!isOwnMessage && msg.sender_type === 'user' && (
+                                    {msg.sender_type === 'user' && (
                                         <span className={styles.messageAvatar}>
                                             {participants.find(p => p.user_id === msg.sender_id)?.avatar_url ? (
                                                 <img src={participants.find(p => p.user_id === msg.sender_id).avatar_url} alt="" style={{ width: '24px', height: '24px', borderRadius: '50%', objectFit: 'cover' }} />
@@ -591,7 +598,7 @@ export default function ChatViewPage() {
                         {/* Mobile Overlay */}
                         {showParticipants && (
                             <div
-                                className={styles.participantsOverlay}
+                                className={`${styles.participantsOverlay} ${styles.mobileOnlyOverlay}`}
                                 onClick={() => setShowParticipants(false)}
                             />
                         )}
