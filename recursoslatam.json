@@ -1,0 +1,196 @@
+{
+    "tablas_recursos_duelo": {
+        "tabla_1_referencia_clinica_teorica": [
+            {
+                "titulo": "Sobre el duelo y el dolor",
+                "autor": "E. Kübler-Ross / D. Kessler",
+                "enfoque": "Etapas del Duelo",
+                "calificacion_sugerida": "4.8/5.0",
+                "disponibilidad_chile": "Buscalibre (Alta)",
+                "precio_estimado_clp": "$27.520"
+            },
+            {
+                "titulo": "Aprender de la pérdida",
+                "autor": "Robert A. Neimeyer",
+                "enfoque": "Constructivista",
+                "calificacion_sugerida": "4.7/5.0",
+                "disponibilidad_chile": "Planeta (Alta)",
+                "precio_estimado_clp": "$18.550"
+            },
+            {
+                "titulo": "El tratamiento del duelo",
+                "autor": "J. William Worden",
+                "enfoque": "Tareas del Duelo",
+                "calificacion_sugerida": "4.9/5.0",
+                "disponibilidad_chile": "Paidós (Media)",
+                "precio_estimado_clp": "$32.490"
+            },
+            {
+                "titulo": "La rueda de la vida",
+                "autor": "E. Kübler-Ross",
+                "enfoque": "Biográfico/Espiritual",
+                "calificacion_sugerida": "4.7/5.0",
+                "disponibilidad_chile": "Vergara (Alta)",
+                "precio_estimado_clp": "$7.800"
+            },
+            {
+                "titulo": "El camino de las lágrimas",
+                "autor": "Jorge Bucay",
+                "enfoque": "Terapéutico/Relato",
+                "calificacion_sugerida": "4.6/5.0",
+                "disponibilidad_chile": "Océano (Alta)",
+                "precio_estimado_clp": "$17.570"
+            }
+        ],
+        "tabla_2_literatura_testimonio_memorias": [
+            {
+                "obra": "Diario de duelo",
+                "autor": "Roland Barthes",
+                "tematica": "Pérdida de la madre",
+                "calificacion_goodreads": "4.1/5.0",
+                "disponibilidad_chile": "Buscalibre/Librerías"
+            },
+            {
+                "obra": "El año del pensamiento mágico",
+                "autor": "Joan Didion",
+                "tematica": "Muerte repentina",
+                "calificacion_goodreads": "4.2/5.0",
+                "disponibilidad_chile": "Buscalibre/Anagrama"
+            },
+            {
+                "obra": "Lo que no tiene nombre",
+                "autor": "Piedad Bonett",
+                "tematica": "Suicidio de un hijo",
+                "calificacion_goodreads": "4.5/5.0",
+                "disponibilidad_chile": "Alfaguara/Digital"
+            },
+            {
+                "obra": "La ridícula idea de no volver a verte",
+                "autor": "Rosa Montero",
+                "tematica": "Viudez y resiliencia",
+                "calificacion_goodreads": "4.3/5.0",
+                "disponibilidad_chile": "Seix Barral"
+            },
+            {
+                "obra": "Di su nombre",
+                "autor": "Francisco Goldman",
+                "tematica": "Accidente y culpa",
+                "calificacion_goodreads": "4.0/5.0",
+                "disponibilidad_chile": "Buscalibre"
+            }
+        ],
+        "tabla_3_cine_y_series": [
+            {
+                "titulo": "Pieces of a Woman",
+                "director": "Kornél Mundruczó",
+                "plataforma": "Netflix",
+                "calificacion_imdb": "7.0/10",
+                "formato_calidad": "4K/HDR"
+            },
+            {
+                "titulo": "Manchester by the Sea",
+                "director": "Kenneth Lonergan",
+                "plataforma": "Prime Video / Netflix",
+                "calificacion_imdb": "7.8/10",
+                "formato_calidad": "HD"
+            },
+            {
+                "titulo": "Roma",
+                "director": "Alfonso Cuarón",
+                "plataforma": "Netflix",
+                "calificacion_imdb": "7.7/10",
+                "formato_calidad": "4K"
+            },
+            {
+                "titulo": "After Yang",
+                "director": "Kogonada",
+                "plataforma": "Max",
+                "calificacion_imdb": "7.0/10",
+                "formato_calidad": "HD"
+            },
+            {
+                "titulo": "Up",
+                "director": "Pete Docter",
+                "plataforma": "Disney+",
+                "calificacion_imdb": "8.3/10",
+                "formato_calidad": "4K"
+            },
+            {
+                "titulo": "The Farewell",
+                "director": "Lulu Wang",
+                "plataforma": "Prime Video",
+                "calificacion_imdb": "7.5/10",
+                "formato_calidad": "HD"
+            }
+        ],
+        "tabla_4_anime_manga_novelas_graficas": [
+            {
+                "titulo": "Clannad After Story",
+                "formato": "Anime",
+                "tematica": "Pérdida familiar",
+                "calificacion": "8.93 (MAL)",
+                "plataforma_compra": "Crunchyroll"
+            },
+            {
+                "titulo": "Violet Evergarden",
+                "formato": "Anime",
+                "tematica": "Duelo y redención",
+                "calificacion": "8.69 (MAL)",
+                "plataforma_compra": "Netflix"
+            },
+            {
+                "titulo": "My Broken Mariko",
+                "formato": "Manga",
+                "tematica": "Suicidio de una amiga",
+                "calificacion": "7.73 (MAL)",
+                "plataforma_compra": "Buscalibre/Digital"
+            },
+            {
+                "titulo": "Rosalie Lightning",
+                "formato": "Novela Gráfica",
+                "tematica": "Muerte de un hijo",
+                "calificacion": "4.3/5.0 (GR)",
+                "plataforma_compra": "Buscalibre"
+            },
+            {
+                "titulo": "Dancing at the Pity Party",
+                "formato": "Novela Gráfica",
+                "tematica": "Pérdida de la madre",
+                "calificacion": "4.4/5.0 (GR)",
+                "plataforma_compra": "Buscalibre"
+            }
+        ],
+        "tabla_5_recursos_espirituales": [
+            {
+                "tradicion": "Católica",
+                "obra_recomendada": "Una pena en observación",
+                "autor": "C.S. Lewis",
+                "concepto_clave": "Crisis de fe y sanación"
+            },
+            {
+                "tradicion": "Islámica",
+                "obra_recomendada": "For Those Left Behind",
+                "autor": "Omar Suleiman",
+                "concepto_clave": "Paciencia y vida futura"
+            },
+            {
+                "tradicion": "Judía",
+                "obra_recomendada": "Aprendiendo a decir adiós",
+                "autor": "Marcelo Rittner",
+                "concepto_clave": "Ritual y memoria"
+            },
+            {
+                "tradicion": "Budista",
+                "obra_recomendada": "Cuando todo se derrumba",
+                "autor": "Pema Chödrön",
+                "concepto_clave": "Impermanencia"
+            },
+            {
+                "tradicion": "Sufí",
+                "obra_recomendada": "El jardín de los rectos",
+                "autor": "Al-Ghazali",
+                "concepto_clave": "Purificación del corazón"
+            }
+        ]
+    }
+}

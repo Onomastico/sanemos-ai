@@ -1,0 +1,206 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(15, 25, 35, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.logoIcon {
+    font-size: 1.5rem;
+}
+
+.logoText {
+    font-family: var(--font-heading);
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+}
+
+.navLinks {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.navLink {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.navLink:hover {
+    color: var(--text-primary);
+    background: var(--bg-elevated);
+}
+
+.logoutLink {
+    color: var(--accent-alert);
+}
+
+.logoutLink:hover {
+    color: var(--accent-alert-hover);
+}
+
+.navDivider {
+    width: 1px;
+    height: 20px;
+    background: var(--border-default);
+    margin: 0 var(--space-sm);
+}
+
+.langToggle {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-default);
+    color: var(--text-secondary);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    margin-left: var(--space-sm);
+}
+
+.langToggle:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+.onlineBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-default);
+    color: var(--text-primary);
+    padding: 6px 12px;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    margin-left: var(--space-md);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.onlineDot {
+    width: 8px;
+    height: 8px;
+    background-color: #10B981;
+    /* bright green */
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+    animation: pulseDot 2s infinite;
+}
+
+@keyframes pulseDot {
+    0% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-sm);
+}
+
+.hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text-primary);
+    border-radius: 2px;
+    transition: all var(--transition-base);
+}
+
+.hamburgerOpen span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.hamburgerOpen span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburgerOpen span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .navLinks {
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        flex-direction: column;
+        background: var(--bg-primary);
+        padding: var(--space-xl);
+        gap: var(--space-sm);
+        transform: translateX(100%);
+        transition: transform var(--transition-base);
+        align-items: stretch;
+    }
+
+    .navLinksOpen {
+        transform: translateX(0);
+    }
+
+    .navLink {
+        font-size: var(--font-size-base);
+        padding: var(--space-md);
+        text-align: left;
+    }
+
+    .navDivider {
+        width: 100%;
+        height: 1px;
+        margin: var(--space-sm) 0;
+    }
+}

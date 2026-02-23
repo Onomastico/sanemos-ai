@@ -1,0 +1,402 @@
+.page {
+    min-height: calc(100vh - 80px);
+    padding: var(--space-2xl) 0;
+}
+
+.container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+}
+
+.pageTitle {
+    font-size: var(--font-size-3xl);
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-warm));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.pageSubtitle {
+    color: var(--text-secondary);
+    font-size: var(--font-size-base);
+    margin-top: var(--space-xs);
+}
+
+/* Card */
+.card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sectionTitle {
+    font-size: var(--font-size-xl);
+    color: var(--text-primary);
+}
+
+.sectionHint {
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    margin-top: calc(-1 * var(--space-sm));
+}
+
+/* Avatar */
+.avatarSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.avatarWrapper {
+    position: relative;
+    width: 96px;
+    height: 96px;
+}
+
+.avatarImage {
+    width: 96px;
+    height: 96px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 3px solid var(--accent-primary-glow);
+}
+
+.avatarPlaceholder {
+    width: 96px;
+    height: 96px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, var(--accent-primary-glow), rgba(212, 165, 116, 0.2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    color: var(--accent-primary);
+}
+
+.avatarUploadBtn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    background: var(--accent-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    border: 2px solid var(--bg-secondary);
+    transition: all var(--transition-fast);
+}
+
+.avatarUploadBtn:hover {
+    transform: scale(1.1);
+    background: var(--accent-primary-hover);
+}
+
+.avatarHint {
+    color: var(--text-muted);
+    font-size: var(--font-size-xs);
+}
+
+/* Char count */
+.charCount {
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    text-align: right;
+}
+
+/* Toggle */
+.toggleRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-md) 0;
+    border-top: 1px solid var(--border-light);
+}
+
+.toggleLabel {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.toggleHint {
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    margin-top: var(--space-xs);
+}
+
+.toggle {
+    position: relative;
+    width: 48px;
+    height: 26px;
+    cursor: pointer;
+}
+
+.toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggleSlider {
+    position: absolute;
+    inset: 0;
+    background: var(--bg-elevated);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-default);
+    transition: all var(--transition-base);
+}
+
+.toggleSlider::before {
+    content: '';
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background: var(--text-muted);
+    border-radius: var(--radius-full);
+    transition: all var(--transition-base);
+}
+
+.toggle input:checked + .toggleSlider {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+
+.toggle input:checked + .toggleSlider::before {
+    transform: translateX(22px);
+    background: white;
+}
+
+/* Loss Form */
+.lossForm {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    animation: fadeInUp 0.3s ease;
+}
+
+/* Loss List */
+.lossList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.lossItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: var(--space-md);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.lossItem:hover {
+    border-color: var(--accent-primary-glow);
+}
+
+.lossResolved {
+    opacity: 0.65;
+}
+
+.lossInfo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    flex: 1;
+}
+
+.lossHeader {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.lossDescription {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.lossDate {
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+}
+
+.lossActions {
+    display: flex;
+    gap: var(--space-xs);
+    flex-shrink: 0;
+}
+
+/* Empty State */
+.emptyState {
+    text-align: center;
+    padding: var(--space-xl);
+    color: var(--text-muted);
+}
+
+.emptyIcon {
+    font-size: var(--font-size-3xl);
+    display: block;
+    margin-bottom: var(--space-sm);
+}
+
+/* Public Link */
+.publicLink {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-md) var(--space-lg);
+    background: rgba(123, 143, 212, 0.1);
+    border: 1px solid var(--accent-primary-glow);
+    border-radius: var(--radius-md);
+}
+
+.publicLink p {
+    font-size: var(--font-size-sm);
+    color: var(--accent-primary);
+}
+
+/* Public Profile Page */
+.publicPage {
+    min-height: calc(100vh - 80px);
+    padding: var(--space-2xl) 0;
+}
+
+.publicContainer {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+}
+
+.publicCard {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
+    text-align: center;
+}
+
+.publicAvatarLarge {
+    width: 120px;
+    height: 120px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 3px solid var(--accent-primary-glow);
+    margin: 0 auto var(--space-lg);
+}
+
+.publicAvatarPlaceholder {
+    width: 120px;
+    height: 120px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, var(--accent-primary-glow), rgba(212, 165, 116, 0.2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: var(--font-size-4xl);
+    font-weight: 700;
+    color: var(--accent-primary);
+    margin: 0 auto var(--space-lg);
+}
+
+.publicName {
+    font-size: var(--font-size-2xl);
+}
+
+.publicNickname {
+    color: var(--text-secondary);
+    font-size: var(--font-size-base);
+    margin-top: var(--space-xs);
+}
+
+.publicCurrentLoss {
+    margin-top: var(--space-lg);
+    padding: var(--space-md);
+    background: var(--bg-elevated);
+    border-radius: var(--radius-md);
+}
+
+.publicCurrentLoss span {
+    display: block;
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    margin-bottom: var(--space-xs);
+}
+
+.publicLossHistory {
+    margin-top: var(--space-xl);
+    text-align: left;
+}
+
+.publicLossHistory h3 {
+    margin-bottom: var(--space-md);
+    font-size: var(--font-size-lg);
+}
+
+.privateMessage {
+    text-align: center;
+    padding: var(--space-3xl);
+    color: var(--text-muted);
+}
+
+.privateMessage span {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: var(--space-md);
+}
+
+.badge-sage {
+    background: rgba(107, 158, 138, 0.2);
+    color: var(--accent-calm);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 var(--space-md);
+    }
+
+    .toggleRow {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-sm);
+    }
+
+    .lossItem {
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+
+    .lossActions {
+        align-self: flex-end;
+    }
+}

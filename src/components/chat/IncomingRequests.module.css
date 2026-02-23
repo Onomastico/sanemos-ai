@@ -1,0 +1,79 @@
+.container {
+    position: fixed;
+    bottom: var(--space-xl, 2rem);
+    right: var(--space-xl, 2rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm, 1rem);
+    z-index: 1000;
+}
+
+.requestCard {
+    background: var(--bg-primary, #ffffff);
+    border: 1px solid var(--border-color, #eaeaea);
+    border-radius: var(--radius-md, 8px);
+    padding: var(--space-md, 1rem);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    min-width: 300px;
+    animation: slideIn 0.3s ease-out forwards;
+}
+
+.header {
+    font-weight: bold;
+    margin-bottom: var(--space-xs, 0.5rem);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.body {
+    font-size: 0.9rem;
+    color: var(--text-secondary, #666);
+    margin-bottom: var(--space-sm, 1rem);
+}
+
+.actions {
+    display: flex;
+    gap: var(--space-sm, 0.5rem);
+    justify-content: flex-end;
+}
+
+.btn {
+    padding: 6px 12px;
+    border-radius: var(--radius-sm, 6px);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+}
+
+.acceptBtn {
+    background: var(--primary-color, #0070f3);
+    color: white;
+}
+
+.acceptBtn:hover {
+    background: var(--primary-hover, #0051b3);
+}
+
+.rejectBtn {
+    background: var(--bg-tertiary, #eaeaea);
+    color: var(--text-primary, #333);
+}
+
+.rejectBtn:hover {
+    background: var(--border-color, #d4d4d4);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}

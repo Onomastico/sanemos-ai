@@ -1,0 +1,312 @@
+.page {
+    padding: 100px 0 var(--space-3xl);
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+}
+
+.header {
+    margin-bottom: var(--space-xl);
+}
+
+.header h1 {
+    font-size: var(--font-size-3xl);
+    color: var(--text-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: var(--font-size-base);
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--border-default);
+    padding-bottom: var(--space-xs);
+}
+
+.tab {
+    padding: var(--space-sm) var(--space-lg);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.tab:hover {
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+}
+
+.tabActive {
+    color: var(--accent-primary);
+    border-bottom-color: var(--accent-primary);
+}
+
+/* Section */
+.section {
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-lg);
+}
+
+.sectionHeader h2 {
+    font-size: var(--font-size-xl);
+    color: var(--text-primary);
+}
+
+/* Table */
+.table {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.tableHeader {
+    display: grid;
+    grid-template-columns: 1fr 120px 140px 90px;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-elevated);
+    border-bottom: 1px solid var(--border-default);
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+.tableRow {
+    display: grid;
+    grid-template-columns: 1fr 120px 140px 90px;
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--border-subtle);
+    align-items: center;
+    transition: background var(--transition-fast);
+    font-size: var(--font-size-sm);
+}
+
+.tableRow:last-child {
+    border-bottom: none;
+}
+
+.tableRow:hover {
+    background: var(--bg-elevated);
+}
+
+.colTitle {
+    color: var(--text-primary);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.colType,
+.colWorldview {
+    text-align: center;
+}
+
+.colActions {
+    display: flex;
+    gap: var(--space-xs);
+    justify-content: flex-end;
+}
+
+.editBtn,
+.deleteBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 4px;
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-fast);
+}
+
+.editBtn:hover {
+    background: color-mix(in srgb, var(--accent-primary) 15%, transparent);
+}
+
+.deleteBtn:hover {
+    background: color-mix(in srgb, var(--accent-warm) 20%, transparent);
+}
+
+.emptyRow {
+    padding: var(--space-xl);
+    text-align: center;
+    color: var(--text-muted);
+}
+
+/* Review Section */
+.emptyReview {
+    text-align: center;
+    padding: var(--space-3xl);
+    color: var(--text-muted);
+}
+
+.emptyIcon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: var(--space-md);
+}
+
+.reviewList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.reviewCard {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    transition: border-color var(--transition-fast);
+}
+
+.reviewCard:hover {
+    border-color: var(--accent-warm);
+}
+
+.reviewCardHeader h3 {
+    font-size: var(--font-size-lg);
+    color: var(--text-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.reviewCardMeta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+}
+
+.reviewCardAuthor {
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+}
+
+.reviewCardDesc {
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    margin: var(--space-md) 0;
+    line-height: 1.5;
+}
+
+.reviewCardLink {
+    display: inline-block;
+    font-size: var(--font-size-xs);
+    color: var(--accent-primary);
+    margin-bottom: var(--space-md);
+    word-break: break-all;
+}
+
+.reviewCardActions {
+    display: flex;
+    gap: var(--space-sm);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--border-light);
+}
+
+/* Modal */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: var(--space-lg);
+}
+
+.modal {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 560px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    animation: modalIn 0.2s ease;
+}
+
+@keyframes modalIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal h2 {
+    padding: var(--space-lg);
+    border-bottom: 1px solid var(--border-default);
+    font-size: var(--font-size-lg);
+    color: var(--text-primary);
+}
+
+.modalBody {
+    padding: var(--space-lg);
+    overflow-y: auto;
+    flex: 1;
+}
+
+.modalFooter {
+    padding: var(--space-md) var(--space-lg);
+    border-top: 1px solid var(--border-default);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-sm);
+}
+
+@media (max-width: 768px) {
+
+    .tableHeader,
+    .tableRow {
+        grid-template-columns: 1fr 80px 80px;
+    }
+
+    .colWorldview {
+        display: none;
+    }
+
+    .modal {
+        max-height: 90vh;
+    }
+}
