@@ -32,6 +32,9 @@ export default function ChatViewPage() {
     const [mentionSearch, setMentionSearch] = useState('');
     const [mentionIndex, setMentionIndex] = useState(-1);
 
+    // Participants state
+    const [showParticipants, setShowParticipants] = useState(false);
+
     // Settings modal state
     const [showSettings, setShowSettings] = useState(false);
     const [settingsForm, setSettingsForm] = useState({
@@ -369,6 +372,16 @@ export default function ChatViewPage() {
                     </div>
                 )}
 
+                {!agent && (
+                    <button
+                        className={`btn btn-sm ${showParticipants ? 'btn-primary' : ''}`}
+                        onClick={() => setShowParticipants(!showParticipants)}
+                        title={t('participants') || 'Participants'}
+                    >
+                        👥
+                    </button>
+                )}
+
                 <button
                     className="btn btn-sm"
                     onClick={() => {
@@ -558,21 +571,38 @@ export default function ChatViewPage() {
 
                 {/* Participants Panel */}
                 {!agent && (
-                    <div className={styles.participantsPanel}>
-                        <h3>👥 {t('participants') || 'Participantes'}</h3>
-                        <div className={styles.participantList}>
-                            {participants.map(p => (
-                                <div key={p.user_id} className={styles.participantCard}>
-                                    <div className={styles.participantAvatar}>
-                                        {p.avatar_url ? <img src={p.avatar_url} alt={p.display_name} /> : "👤"}
+                    <>
+                        {/* Mobile Overlay */}
+                        {showParticipants && (
+                            <div 
+                                className={styles.participantsOverlay} 
+                                onClick={() => setShowParticipants(false)}
+                            />
+                        )}
+                        <div className={`${styles.participantsPanel} ${showParticipants ? styles.participantsPanelOpen : ''}`}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-sm)' }}>
+                                <h3>👥 {t('participants') || 'Participantes'}</h3>
+                                <button 
+                                    className={`${styles.chatBackBtn} ${styles.participantsCloseBtn}`}
+                                    onClick={() => setShowParticipants(false)}
+                                >
+                                    ✕
+                                </button>
+                            </div>
+                            <div className={styles.participantList}>
+                                {participants.map(p => (
+                                    <div key={p.user_id} className={styles.participantCard}>
+                                        <div className={styles.participantAvatar}>
+                                            {p.avatar_url ? <img src={p.avatar_url} alt={p.display_name} /> : "👤"}
+                                        </div>
+                                        <div style={{ flex: 1, minWidth: 0 }}>
+                                            <div className={styles.participantName}>{p.display_name || 'Anonymous'}</div>
+                                        </div>
                                     </div>
-                                    <div style={{ flex: 1, minWidth: 0 }}>
-                                        <div className={styles.participantName}>{p.display_name || 'Anonymous'}</div>
-                                    </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    </>
                 )}
             </div>
         </div>
