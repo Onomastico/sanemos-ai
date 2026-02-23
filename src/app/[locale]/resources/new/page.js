@@ -29,7 +29,7 @@ export default function AddResourcePage() {
     const [focusTheme, setFocusTheme] = useState('');
     const [availability, setAvailability] = useState('');
 
-    const resourceTypes = ['book', 'series', 'movie', 'comic', 'manga', 'song', 'other'];
+    const resourceTypes = ['book', 'online_book', 'series', 'movie', 'comic', 'manga', 'song', 'post', 'other'];
     const worldviews = ['secular', 'spiritual', 'christian', 'jewish', 'muslim', 'buddhist', 'hindu', 'universal'];
     const allLossTypes = ['parent', 'child', 'partner', 'sibling', 'friend', 'pet', 'other', 'general'];
 

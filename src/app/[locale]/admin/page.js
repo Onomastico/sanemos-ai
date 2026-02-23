@@ -223,7 +223,8 @@ export default function AdminPage() {
 
     if (loading) return null;
 
-    const resourceTypes = ['book', 'series', 'movie', 'comic', 'manga', 'song', 'other'];
+    const resourceTypes = ['book', 'online_book', 'series', 'movie', 'comic', 'manga', 'song', 'post', 'other'];
+    const lossTypes = ['parent', 'child', 'partner', 'sibling', 'friend', 'pet', 'other', 'general'];
     const worldviews = ['secular', 'spiritual', 'christian', 'jewish', 'muslim', 'buddhist', 'hindu', 'universal'];
 
     const statusBadge = (status) => {

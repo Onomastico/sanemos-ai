@@ -90,6 +90,8 @@
             "comic": "Cómic",
             "manga": "Manga",
             "song": "Canción",
+            "online_book": "Libro en línea",
+            "post": "Publicación / Post / URL",
             "other": "Otro"
         },
         "lossTypes": {
