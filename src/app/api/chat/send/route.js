@@ -22,6 +22,17 @@ export async function POST(request) {
     // Use admin client for all DB operations to avoid RLS issues
     const admin = createAdminClient();
 
+    // First get conversation details
+    const { data: conversation } = await admin
+        .from('conversations')
+        .select('*')
+        .eq('id', conversationId)
+        .single();
+
+    if (!conversation) {
+        return NextResponse.json({ error: 'Conversation not found' }, { status: 404 });
+    }
+
     // Verify user is a participant
     const { data: participant } = await admin
         .from('conversation_participants')
@@ -31,7 +42,18 @@ export async function POST(request) {
         .single();
 
     if (!participant) {
-        return NextResponse.json({ error: 'Not a participant' }, { status: 403 });
+        if (conversation.visibility === 'public') {
+            const { error: partErr } = await admin.from('conversation_participants').insert({
+                conversation_id: conversationId,
+                user_id: user.id
+            });
+            if (partErr) {
+                console.error('Error joining public room:', partErr);
+                return NextResponse.json({ error: 'Failed to join room' }, { status: 500 });
+            }
+        } else {
+            return NextResponse.json({ error: 'Not a participant' }, { status: 403 });
+        }
     }
 
     // Save user's message
@@ -47,14 +69,7 @@ export async function POST(request) {
         return NextResponse.json({ error: msgError.message }, { status: 500 });
     }
 
-    // Get conversation details
-    const { data: conversation } = await admin
-        .from('conversations')
-        .select('*')
-        .eq('id', conversationId)
-        .single();
-
-    // If it's an AI conversation, generate a response
+    // Use the conversation details fetched above
     if (conversation?.type === 'ai' && conversation?.ai_agent_type) {
         const agent = getAgent(conversation.ai_agent_type);
 

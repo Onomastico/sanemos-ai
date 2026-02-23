@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import { usePresence } from '@/hooks/usePresence';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
@@ -15,7 +16,7 @@ export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const [isStaff, setIsStaff] = useState(false);
-    const [onlineUsers, setOnlineUsers] = useState(0);
+    const [profile, setProfile] = useState(null);
 
     const locale = pathname.split('/')[1] || 'en';
     const otherLocale = locale === 'en' ? 'es' : 'en';
@@ -23,46 +24,29 @@ export default function Navbar() {
     useEffect(() => {
         const supabase = createClient();
 
-        supabase.auth.getUser().then(({ data: { user } }) => {
+        supabase.auth.getUser().then(async ({ data: { user } }) => {
             setUser(user);
             setLoading(false);
             if (user) {
                 fetch('/api/admin/check').then(r => r.json()).then(d => setIsStaff(d.isStaff));
+                const { data: userProfile } = await supabase.from('profiles').select('*').eq('id', user.id).single();
+                setProfile(userProfile || { id: user.id, email: user.email });
             }
         });
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
             setUser(session?.user ?? null);
+            if (!session?.user) {
+                setProfile(null);
+            }
         });
-
-        // Setup Realtime Presence
-        const channel = supabase.channel('global_presence', {
-            config: {
-                presence: {
-                    key: 'user-' + Math.random().toString(36).substring(2, 9),
-                },
-            },
-        });
-
-        channel
-            .on('presence', { event: 'sync' }, () => {
-                const state = channel.presenceState();
-                const totalOnline = Object.keys(state).length;
-                setOnlineUsers(totalOnline);
-            })
-            .subscribe(async (status) => {
-                if (status === 'SUBSCRIBED') {
-                    await channel.track({
-                        online_at: new Date().toISOString(),
-                    });
-                }
-            });
 
         return () => {
             subscription.unsubscribe();
-            supabase.removeChannel(channel);
         };
     }, []);
+
+    const { onlineCount } = usePresence(profile);
 
     const handleLogout = async () => {
         const supabase = createClient();
@@ -143,7 +127,7 @@ export default function Navbar() {
 
                     <div className={styles.onlineBadge} title={tCommon('onlineUsers') || 'Online Users'}>
                         <span className={styles.onlineDot}></span>
-                        <span>{onlineUsers} online</span>
+                        <span>{onlineCount} online</span>
                     </div>
 
                     <button className={styles.langToggle} onClick={switchLocale} title="Switch language">
