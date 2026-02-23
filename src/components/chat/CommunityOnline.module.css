@@ -1,5 +1,6 @@
 .container {
-    background: var(--bg-secondary, #f9f9ca); /* fallback if not defined */
+    background: var(--bg-secondary, #f9f9ca);
+    /* fallback if not defined */
     border-radius: var(--radius-lg, 12px);
     padding: var(--space-md, 1rem);
     display: flex;
@@ -31,7 +32,7 @@
     flex-direction: column;
     gap: var(--space-sm, 0.5rem);
     overflow-y: auto;
-    padding-right: var(--space-xs);
+    padding: 4px;
 }
 
 .userCard {
@@ -47,8 +48,7 @@
 
 .userCard:hover {
     border-color: var(--primary-color, #0070f3);
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .userInfo {

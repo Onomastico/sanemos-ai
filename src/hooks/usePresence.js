@@ -49,7 +49,7 @@ export function usePresence(userInfo) {
                 if (status === 'SUBSCRIBED') {
                     await room.track({
                         id: userInfo.id,
-                        name: userInfo.full_name || userInfo.email?.split('@')[0] || 'Anonymous',
+                        name: userInfo.display_name || userInfo.email?.split('@')[0] || 'Anonymous',
                         loss_type: userInfo.loss_type || null,
                         worldview: userInfo.worldview || null,
                         avatar: userInfo.avatar_url || null,
