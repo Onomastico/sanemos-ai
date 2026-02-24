@@ -618,6 +618,15 @@ export default function ChatViewPage() {
                                         <div style={{ flex: 1, minWidth: 0 }}>
                                             <div className={styles.participantName}>{p.display_name || 'Anonymous'}</div>
                                         </div>
+                                        <div className={styles.participantActions}>
+                                            <button
+                                                className={styles.participantActionBtn}
+                                                onClick={() => router.push(`/${locale}/profile/${p.user_id}`)}
+                                                title={t('viewProfile') || "Ver perfil"}
+                                            >
+                                                👁️
+                                            </button>
+                                        </div>
                                     </div>
                                 ))}
                             </div>

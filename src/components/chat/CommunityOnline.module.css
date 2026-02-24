@@ -98,6 +98,12 @@
     color: var(--text-secondary, #666);
 }
 
+.actions {
+    display: flex;
+    gap: var(--space-xs, 0.25rem);
+    align-items: center;
+}
+
 .actionBtn {
     background: none;
     border: none;

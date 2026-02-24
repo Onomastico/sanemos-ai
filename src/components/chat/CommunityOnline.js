@@ -1,10 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter, useParams } from 'next/navigation';
 import styles from './CommunityOnline.module.css';
 
 export default function CommunityOnline({ onlineUsers, currentUser, onRequestChat }) {
     const [requestingId, setRequestingId] = useState(null);
+    const router = useRouter();
+    const params = useParams();
+    const locale = params.locale || 'es';
 
     // Filter out current user from the list
     const othersOnline = onlineUsers.filter(u => u.id !== currentUser?.id);
@@ -52,14 +56,23 @@ export default function CommunityOnline({ onlineUsers, currentUser, onRequestCha
                                     </div>
                                 </div>
                             </div>
-                            <button
-                                className={styles.actionBtn}
-                                onClick={() => handleRequest(user)}
-                                disabled={requestingId === user.id}
-                                title="Enviar solicitud de chat"
-                            >
-                                {requestingId === user.id ? '...' : '💬'}
-                            </button>
+                            <div className={styles.actions}>
+                                <button
+                                    className={styles.actionBtn}
+                                    onClick={() => router.push(`/${locale}/profile/${user.id}`)}
+                                    title="Ver perfil público"
+                                >
+                                    👁️
+                                </button>
+                                <button
+                                    className={styles.actionBtn}
+                                    onClick={() => handleRequest(user)}
+                                    disabled={requestingId === user.id}
+                                    title="Enviar solicitud de chat"
+                                >
+                                    {requestingId === user.id ? '...' : '💬'}
+                                </button>
+                            </div>
                         </div>
                     ))
                 )}

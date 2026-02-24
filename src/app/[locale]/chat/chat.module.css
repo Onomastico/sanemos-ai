@@ -614,6 +614,31 @@
   border-radius: var(--radius-md);
   background: var(--bg-primary);
   border: 1px solid var(--border-subtle);
+  transition: border-color var(--transition-fast);
+}
+
+.participantCard:hover {
+  border-color: var(--accent-primary);
+}
+
+.participantActions {
+  display: flex;
+  gap: 4px;
+}
+
+.participantActionBtn {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.participantActionBtn:hover {
+  background: var(--bg-elevated);
+  transform: scale(1.1);
 }
 
 .participantAvatar {
