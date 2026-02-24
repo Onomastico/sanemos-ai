@@ -108,11 +108,11 @@ export default function ChatViewPage() {
                 // Load participants
                 const { data: participantsData, error: partErr } = await supabase
                     .from('conversation_participants')
-                    .select('user_id, profiles(id, display_name, avatar_url, loss_type, worldview)')
+                    .select('user_id, profiles(*)')
                     .eq('conversation_id', conversationId);
 
                 if (partErr) {
-                    console.error("Error loading participants:", partErr);
+                    console.error("Error loading participants:", partErr.message || JSON.stringify(partErr));
                 }
 
                 if (participantsData) {
