@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { usePresence } from '@/hooks/usePresence';
+import { usePresenceData } from '@/context/PresenceContext';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
@@ -54,7 +54,7 @@ export default function Navbar() {
         };
     }, []);
 
-    const { onlineCount } = usePresence(profile);
+    const { onlineCount } = usePresenceData();
 
     const handleLogout = async () => {
         const supabase = createClient();

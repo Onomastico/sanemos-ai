@@ -8,7 +8,7 @@ import { getAllAgents } from '@/lib/ai/agents';
 import AgentCard from '@/components/chat/AgentCard';
 import CommunityOnline from '@/components/chat/CommunityOnline';
 import IncomingRequests from '@/components/chat/IncomingRequests';
-import { usePresence } from '@/hooks/usePresence';
+import { usePresenceData } from '@/context/PresenceContext';
 import styles from './chat.module.css';
 
 export default function ChatPage() {
@@ -24,8 +24,8 @@ export default function ChatPage() {
     const [loading, setLoading] = useState(true);
     const agents = getAllAgents();
 
-    // Global presence
-    const { onlineUsers } = usePresence(profile);
+    // Global presence — reads from single shared channel (PresenceProvider in layout)
+    const { onlineUsers } = usePresenceData();
 
     // Search state
     const [searchQuery, setSearchQuery] = useState('');

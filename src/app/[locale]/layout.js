@@ -3,6 +3,7 @@ import { getMessages, setRequestLocale } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import { PresenceProvider } from '@/context/PresenceContext';
 
 export function generateStaticParams() {
     return routing.locales.map((locale) => ({ locale }));
@@ -44,9 +45,11 @@ export default async function LocaleLayout({ children, params }) {
             </head>
             <body>
                 <NextIntlClientProvider messages={messages}>
-                    <Navbar />
-                    <main>{children}</main>
-                    <Footer />
+                    <PresenceProvider>
+                        <Navbar />
+                        <main>{children}</main>
+                        <Footer />
+                    </PresenceProvider>
                 </NextIntlClientProvider>
             </body>
         </html>
