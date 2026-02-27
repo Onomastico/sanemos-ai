@@ -24,17 +24,39 @@
     gap: var(--space-sm);
 }
 
-.logo {
-    font-family: var(--font-heading);
-    font-size: var(--font-size-lg);
-    font-weight: 700;
-    color: var(--text-primary);
+.logoWrapper {
+    display: inline-flex;
+}
+
+.logoImage {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
 }
 
 .tagline {
     color: var(--text-secondary);
     font-size: var(--font-size-sm);
     max-width: 300px;
+}
+
+.socials {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.socialLink {
+    color: var(--text-muted);
+    transition: color var(--transition-fast), transform var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.socialLink:hover {
+    color: var(--accent-primary);
+    transform: translateY(-2px);
 }
 
 .crisis {
@@ -73,5 +95,11 @@
     .top {
         flex-direction: column;
         gap: var(--space-xl);
+    }
+
+    .socials {
+        justify-content: flex-start;
+        width: 100%;
+        gap: var(--space-lg);
     }
 }

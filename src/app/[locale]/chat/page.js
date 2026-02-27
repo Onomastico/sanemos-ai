@@ -59,16 +59,40 @@ export default function ChatPage() {
             }
 
             // Fetch public rooms
-            const publicRes = await fetch('/api/chat/public');
-            if (publicRes.ok) {
-                const pdata = await publicRes.json();
-                setPublicRooms(pdata.conversations || []);
-            }
+            const fetchPublicRooms = async () => {
+                const publicRes = await fetch('/api/chat/public');
+                if (publicRes.ok) {
+                    const pdata = await publicRes.json();
+                    setPublicRooms(pdata.conversations || []);
+                }
+            };
 
+            await fetchPublicRooms();
             setLoading(false);
+
+            // Subscribe to public room updates
+            const channel = supabase
+                .channel('public-rooms-list')
+                .on(
+                    'postgres_changes',
+                    { event: '*', schema: 'public', table: 'conversations', filter: "visibility=eq.public" },
+                    () => {
+                        fetchPublicRooms();
+                    }
+                )
+                .subscribe();
+
+            return () => {
+                supabase.removeChannel(channel);
+            };
         };
 
-        init();
+        const cleanup = init();
+        return () => {
+            cleanup.then(clean => {
+                if (typeof clean === 'function') clean();
+            });
+        };
     }, [locale, router]);
 
     const startChat = async (agentId) => {

@@ -5,10 +5,12 @@ import { createClient } from '@/lib/supabase/client';
 
 export function usePresence(userInfo) {
     const [onlineUsers, setOnlineUsers] = useState([]);
-    const supabase = createClient();
 
     useEffect(() => {
         if (!userInfo || !userInfo.id) return;
+
+        // Create client inside effect so it never changes across renders
+        const supabase = createClient();
 
         // Use a global room for presence
         const room = supabase.channel('room:global', {
@@ -27,7 +29,6 @@ export function usePresence(userInfo) {
                     usersArray.push(newState[key][0]); // Get the most recent state
                 }
             }
-            // Sort by name or keep default order
             setOnlineUsers(usersArray);
         };
 
@@ -58,7 +59,7 @@ export function usePresence(userInfo) {
             room.untrack();
             supabase.removeChannel(room);
         };
-    }, [userInfo, supabase]);
+    }, [userInfo?.id]); // Solo depende del ID, no del objeto completo ni del cliente
 
     return {
         onlineUsers: onlineUsers,

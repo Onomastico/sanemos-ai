@@ -141,6 +141,13 @@ export default function DashboardPage() {
                         <span className={styles.actionIcon}>🩺</span>
                         <span className={styles.actionLabel}>{t('therapists')}</span>
                     </button>
+                    <button
+                        className={styles.actionCard}
+                        onClick={() => router.push(`/${locale}/therapists/new`)}
+                    >
+                        <span className={styles.actionIcon}>🩺✨</span>
+                        <span className={styles.actionLabel}>{locale === 'es' ? 'Añadir Terapeuta' : 'Add Therapist'}</span>
+                    </button>
                 </div>
 
                 {/* My Resources */}

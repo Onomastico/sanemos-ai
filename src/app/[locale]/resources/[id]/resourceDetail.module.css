@@ -1,6 +1,6 @@
 .page {
     min-height: calc(100vh - 80px);
-    padding: var(--space-2xl) 0;
+    padding: 100px 0 var(--space-3xl);
 }
 
 .container {

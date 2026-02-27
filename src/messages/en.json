@@ -192,7 +192,8 @@
     "requestSent": "Request sent to {name}",
     "requestError": "Error sending request.",
     "realPeople": "Real People",
-    "untitledConversation": "Untitled Conversation"
+    "untitledConversation": "Untitled Conversation",
+    "viewProfile": "View profile"
   },
   "therapists": {
     "title": "Therapist Directory",

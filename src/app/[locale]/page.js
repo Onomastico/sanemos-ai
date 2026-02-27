@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import styles from './page.module.css';
 
 export default function LandingPage() {
@@ -10,6 +11,33 @@ export default function LandingPage() {
     const pathname = usePathname();
     const router = useRouter();
     const locale = pathname.split('/')[1] || 'en';
+
+    const [stats, setStats] = useState({ users: 0, resources: 0, therapists: 0 });
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        const fetchStats = async () => {
+            try {
+                const res = await fetch('/api/stats');
+                if (res.ok) {
+                    const data = await res.json();
+                    setStats(data);
+                }
+            } catch (error) {
+                console.error("Error fetching homepage stats:", error);
+            }
+        };
+
+        const checkAuth = async () => {
+            const { createClient } = await import('@/lib/supabase/client');
+            const supabase = createClient();
+            const { data: { user } } = await supabase.auth.getUser();
+            setUser(user);
+        };
+
+        fetchStats();
+        checkAuth();
+    }, []);
 
     return (
         <div className={styles.landing}>
@@ -26,7 +54,7 @@ export default function LandingPage() {
                     <div className={styles.heroCta}>
                         <button
                             className="btn btn-primary btn-lg"
-                            onClick={() => router.push(`/${locale}/auth/register`)}
+                            onClick={() => router.push(user ? `/${locale}/dashboard` : `/${locale}/auth/register`)}
                         >
                             {t('ctaStart')}
                         </button>
@@ -85,15 +113,15 @@ export default function LandingPage() {
                 <div className={styles.container}>
                     <div className={styles.statGrid}>
                         <div className={styles.statCard}>
-                            <span className={styles.statNumber}>0</span>
+                            <span className={styles.statNumber}>{stats.users}</span>
                             <span className={styles.statLabel}>{t('statsUsers')}</span>
                         </div>
                         <div className={styles.statCard}>
-                            <span className={styles.statNumber}>0</span>
+                            <span className={styles.statNumber}>{stats.resources}</span>
                             <span className={styles.statLabel}>{t('statsResources')}</span>
                         </div>
                         <div className={styles.statCard}>
-                            <span className={styles.statNumber}>0</span>
+                            <span className={styles.statNumber}>{stats.therapists}</span>
                             <span className={styles.statLabel}>{t('statsTherapists')}</span>
                         </div>
                     </div>

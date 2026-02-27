@@ -3,15 +3,22 @@ import { checkStaff } from '@/lib/supabase/auth';
 import { createAdminClient } from '@/lib/supabase/admin';
 
 // GET /api/admin/therapists — list all therapists (admin only)
-export async function GET() {
+export async function GET(request) {
     const { isAdmin } = await checkStaff();
     if (!isAdmin) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
+    const { searchParams } = new URL(request.url);
+    const status = searchParams.get('status');
+
     const admin = createAdminClient();
-    const { data, error } = await admin
+    let query = admin
         .from('therapists')
-        .select('*')
+        .select('*, profiles(id, display_name)')
         .order('created_at', { ascending: false });
+
+    if (status) query = query.eq('status', status);
+
+    const { data, error } = await query;
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
     return NextResponse.json({ therapists: data || [] });

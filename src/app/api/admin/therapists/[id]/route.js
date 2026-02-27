@@ -39,6 +39,35 @@ export async function PUT(request, { params }) {
     return NextResponse.json({ therapist: data });
 }
 
+// PATCH /api/admin/therapists/[id] — approve or reject a therapist
+export async function PATCH(request, { params }) {
+    const { isAdmin } = await checkStaff();
+    if (!isAdmin) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+
+    const { id } = await params;
+    const body = await request.json();
+    const admin = createAdminClient();
+
+    const updateData = { status: body.status };
+    if (body.status === 'rejected' && body.rejection_reason) {
+        updateData.rejection_reason = body.rejection_reason;
+    }
+    if (body.status === 'approved') {
+        updateData.rejection_reason = null;
+        updateData.is_verified = true; // Mark as verified automatically when approved
+    }
+
+    const { data, error } = await admin
+        .from('therapists')
+        .update(updateData)
+        .eq('id', id)
+        .select()
+        .single();
+
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ therapist: data });
+}
+
 // DELETE /api/admin/therapists/[id]
 export async function DELETE(request, { params }) {
     const { isAdmin } = await checkStaff();

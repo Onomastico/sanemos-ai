@@ -1,6 +1,6 @@
 .page {
-    min-height: calc(100vh - 80px);
-    padding: var(--space-2xl) 0;
+    min-height: calc(100vh - 64px);
+    padding: calc(64px + var(--space-xl)) 0 var(--space-2xl);
 }
 
 .container {
@@ -178,12 +178,12 @@
     transition: all var(--transition-base);
 }
 
-.toggle input:checked + .toggleSlider {
+.toggle input:checked+.toggleSlider {
     background: var(--accent-primary);
     border-color: var(--accent-primary);
 }
 
-.toggle input:checked + .toggleSlider::before {
+.toggle input:checked+.toggleSlider::before {
     transform: translateX(22px);
     background: white;
 }
@@ -287,8 +287,8 @@
 
 /* Public Profile Page */
 .publicPage {
-    min-height: calc(100vh - 80px);
-    padding: var(--space-2xl) 0;
+    min-height: calc(100vh - 64px);
+    padding: calc(64px + var(--space-xl)) 0 var(--space-2xl);
 }
 
 .publicContainer {

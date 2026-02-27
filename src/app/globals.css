@@ -2,40 +2,40 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
 
 :root {
-  /* Background */
-  --bg-primary: #0F1923;
-  --bg-secondary: #1A2736;
-  --bg-elevated: #243447;
-  --bg-hover: #2A3E55;
-  --bg-overlay: rgba(15, 25, 35, 0.85);
+  /* Background — deep brand blue (Logo 2 palette) */
+  --bg-primary: #0b1d3a;
+  --bg-secondary: #132847;
+  --bg-elevated: #1b3357;
+  --bg-hover: #234069;
+  --bg-overlay: rgba(11, 29, 58, 0.85);
 
   /* Text */
-  --text-primary: #E8ECF1;
-  --text-secondary: #8B9DB5;
-  --text-muted: #5D7290;
-  --text-inverse: #0F1923;
+  --text-primary: #e8f4ff;
+  --text-secondary: #7bacd0;
+  --text-muted: #4a7aa8;
+  --text-inverse: #0b1d3a;
 
-  /* Accent */
-  --accent-primary: #7B8FD4;
-  --accent-primary-hover: #9AABE0;
-  --accent-primary-glow: rgba(123, 143, 212, 0.25);
-  --accent-warm: #D4A574;
-  --accent-warm-hover: #E0BD96;
-  --accent-calm: #6B9E8A;
-  --accent-calm-hover: #83B8A2;
-  --accent-alert: #C47D8A;
-  --accent-alert-hover: #D69AA5;
+  /* Accent — Logo 2: #3395ff (blue), #00ffcc (mint) */
+  --accent-primary: #3395ff;
+  --accent-primary-hover: #5aaeff;
+  --accent-primary-glow: rgba(51, 149, 255, 0.25);
+  --accent-warm: #a189d9;
+  --accent-warm-hover: #bdafe3;
+  --accent-calm: #00e5b8;
+  --accent-calm-hover: #33edca;
+  --accent-alert: #ff6b8a;
+  --accent-alert-hover: #ff8fa6;
 
   /* Border */
-  --border-default: #2A3A4E;
-  --border-light: #1E2E40;
-  --border-focus: #7B8FD4;
+  --border-default: #1e3a6b;
+  --border-light: #132847;
+  --border-focus: #3395ff;
 
   /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.4);
-  --shadow-glow: 0 0 20px rgba(123, 143, 212, 0.15);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px rgba(51, 149, 255, 0.2);
 
   /* Radius */
   --radius-sm: 6px;
@@ -72,6 +72,44 @@
   --transition-slow: 400ms ease;
 }
 
+/* Light Theme Overrides — Logo 1 palette */
+[data-theme="light"] {
+  /* Background */
+  --bg-primary: #fcfcfc;
+  --bg-secondary: #f4f8fb;
+  --bg-elevated: #e8f1f8;
+  --bg-hover: #d6e8f5;
+  --bg-overlay: rgba(252, 252, 252, 0.92);
+
+  /* Text */
+  --text-primary: #221e1f;
+  --text-secondary: #2f4d64;
+  --text-muted: #3c7ca9;
+  --text-inverse: #fcfcfc;
+
+  /* Accent — Logo 1: #4aacee (light blue), #3c7ca9 (mid blue), #2f4d64 (dark blue) */
+  --accent-primary: #4aacee;
+  --accent-primary-hover: #6bbef5;
+  --accent-primary-glow: rgba(74, 172, 238, 0.2);
+  --accent-warm: #c97a45;
+  --accent-warm-hover: #d9935f;
+  --accent-calm: #2f4d64;
+  --accent-calm-hover: #3c7ca9;
+  --accent-alert: #c0394f;
+  --accent-alert-hover: #d45060;
+
+  /* Border */
+  --border-default: #c9dde9;
+  --border-light: #dceef7;
+  --border-focus: #4aacee;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(47, 77, 100, 0.12);
+  --shadow-md: 0 4px 12px rgba(47, 77, 100, 0.15);
+  --shadow-lg: 0 8px 30px rgba(47, 77, 100, 0.18);
+  --shadow-glow: 0 0 20px rgba(74, 172, 238, 0.25);
+}
+
 /* ===== Reset ===== */
 *,
 *::before,
@@ -96,7 +134,12 @@ body {
   min-height: 100vh;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
   font-weight: 600;
   line-height: 1.2;
@@ -118,7 +161,10 @@ img {
   display: block;
 }
 
-input, textarea, select, button {
+input,
+textarea,
+select,
+button {
   font-family: inherit;
   font-size: inherit;
 }
@@ -275,10 +321,10 @@ input, textarea, select, button {
 }
 
 .card-glass {
-  background: rgba(26, 39, 54, 0.6);
+  background: var(--bg-overlay);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(42, 58, 78, 0.5);
+  border: 1px solid var(--border-light);
 }
 
 /* ===== Badges ===== */
@@ -348,8 +394,17 @@ input, textarea, select, button {
   flex-shrink: 0;
 }
 
-.avatar-sm { width: 32px; height: 32px; font-size: var(--font-size-xs); }
-.avatar-lg { width: 56px; height: 56px; font-size: var(--font-size-xl); }
+.avatar-sm {
+  width: 32px;
+  height: 32px;
+  font-size: var(--font-size-xs);
+}
+
+.avatar-lg {
+  width: 56px;
+  height: 56px;
+  font-size: var(--font-size-xl);
+}
 
 /* ===== Toast / Notification ===== */
 .toast {
@@ -365,33 +420,72 @@ input, textarea, select, button {
   animation: slideUp 0.3s ease;
 }
 
-.toast-success { border-left: 3px solid var(--accent-calm); }
-.toast-error { border-left: 3px solid var(--accent-alert); }
-.toast-info { border-left: 3px solid var(--accent-primary); }
+.toast-success {
+  border-left: 3px solid var(--accent-calm);
+}
+
+.toast-error {
+  border-left: 3px solid var(--accent-alert);
+}
+
+.toast-info {
+  border-left: 3px solid var(--accent-primary);
+}
 
 @keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* ===== Animations ===== */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
 }
 
-.animate-fade-in { animation: fadeIn 0.5s ease; }
-.animate-fade-in-up { animation: fadeInUp 0.6s ease forwards; }
+.animate-fade-in {
+  animation: fadeIn 0.5s ease;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
 
 /* ===== Skeleton Loading ===== */
 .skeleton {
@@ -402,8 +496,13 @@ input, textarea, select, button {
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 /* ===== Scrollbar ===== */
@@ -431,7 +530,7 @@ input, textarea, select, button {
     --font-size-4xl: 1.875rem;
     --font-size-3xl: 1.5rem;
   }
-  
+
   .container {
     padding: 0 var(--space-md);
   }

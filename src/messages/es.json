@@ -192,7 +192,8 @@
         "requestSent": "Solicitud enviada a {name}",
         "requestError": "Error al enviar solicitud.",
         "realPeople": "Personas Reales",
-        "untitledConversation": "Conversación sin título"
+        "untitledConversation": "Conversación sin título",
+        "viewProfile": "Ver perfil"
     },
     "therapists": {
         "title": "Directorio de Terapeutas",

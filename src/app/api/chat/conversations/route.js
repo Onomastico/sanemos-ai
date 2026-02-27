@@ -58,6 +58,16 @@ export async function POST(request) {
     // Use admin client to create conversation and add participant
     const admin = createAdminClient();
 
+    // Ensure profile exists for this user (handles local dev missing trigger cases)
+    const { data: profileCheck } = await admin.from('profiles').select('id').eq('id', user.id).single();
+    if (!profileCheck) {
+        await admin.from('profiles').insert({
+            id: user.id,
+            display_name: user.user_metadata?.display_name || user.user_metadata?.full_name || user.email?.split('@')[0] || 'User',
+            role: 'user'
+        });
+    }
+
     // Create conversation
     const { data: conversation, error: convError } = await admin
         .from('conversations')

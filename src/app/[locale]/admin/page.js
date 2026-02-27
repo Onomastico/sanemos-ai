@@ -22,7 +22,9 @@ export default function AdminPage() {
     const [resources, setResources] = useState([]);
     const [pendingResources, setPendingResources] = useState([]);
     const [pendingComments, setPendingComments] = useState([]);
+    const [pendingTherapists, setPendingTherapists] = useState([]);
     const [therapists, setTherapists] = useState([]);
+    const [users, setUsers] = useState([]);
 
     // Settings
     const [settings, setSettings] = useState({});
@@ -63,6 +65,18 @@ export default function AdminPage() {
         setTherapists(data.therapists || []);
     };
 
+    const loadPendingTherapists = async () => {
+        const res = await fetch('/api/admin/therapists?status=pending');
+        const data = await res.json();
+        setPendingTherapists(data.therapists || []);
+    };
+
+    const loadUsers = async () => {
+        const res = await fetch('/api/admin/users');
+        const data = await res.json();
+        setUsers(data.users || []);
+    };
+
     const loadSettings = async () => {
         const res = await fetch('/api/admin/settings');
         const data = await res.json();
@@ -89,9 +103,11 @@ export default function AdminPage() {
             loadPendingResources();
             loadPendingComments();
             if (data.isAdmin) {
+                loadPendingTherapists();
                 loadResources();
                 loadTherapists();
                 loadSettings();
+                loadUsers();
             }
         };
         init();
@@ -246,7 +262,7 @@ export default function AdminPage() {
                         className={`${styles.tab} ${tab === 'review' ? styles.tabActive : ''}`}
                         onClick={() => setTab('review')}
                     >
-                        📋 {t('reviewTab')} ({pendingResources.length + pendingComments.length})
+                        📋 {t('reviewTab')} ({pendingResources.length + pendingComments.length + pendingTherapists.length})
                     </button>
                     {isAdmin && (
                         <button
@@ -262,6 +278,14 @@ export default function AdminPage() {
                             onClick={() => setTab('therapists')}
                         >
                             🩺 {t('therapistsTab')} ({therapists.length})
+                        </button>
+                    )}
+                    {isAdmin && (
+                        <button
+                            className={`${styles.tab} ${tab === 'users' ? styles.tabActive : ''}`}
+                            onClick={() => setTab('users')}
+                        >
+                            👥 {locale === 'es' ? 'Usuarios' : 'Users'} ({users.length})
                         </button>
                     )}
                     {isAdmin && (
@@ -379,6 +403,73 @@ export default function AdminPage() {
                                 ))}
                             </div>
                         )}
+                        {/* Pending Therapists */}
+                        {isAdmin && pendingTherapists.length > 0 && (
+                            <>
+                                <div className={styles.sectionHeader} style={{ marginTop: 'var(--space-xl)' }}>
+                                    <h2>🩺 {locale === 'es' ? 'Terapeutas Pendientes' : 'Pending Therapists'}</h2>
+                                </div>
+                                <div className={styles.reviewList}>
+                                    {pendingTherapists.map((th) => (
+                                        <div key={th.id} className={styles.reviewCard}>
+                                            <div className={styles.reviewCardHeader}>
+                                                <div>
+                                                    <h3>{th.full_name}</h3>
+                                                    <div className={styles.reviewCardMeta}>
+                                                        <span className="badge badge-primary">{tTher(`modalities.${th.modality}`)}</span>
+                                                        <span className={styles.reviewCardAuthor}>
+                                                            {t('submittedBy')} {th.profiles?.display_name || 'Unknown'}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {th.bio && (
+                                                <p className={styles.reviewCardDesc}>{th.bio}</p>
+                                            )}
+                                            <div className={styles.reviewCardActions}>
+                                                <button
+                                                    className="btn btn-primary btn-sm"
+                                                    onClick={async () => {
+                                                        await fetch(`/api/admin/therapists/${th.id}`, {
+                                                            method: 'PATCH',
+                                                            headers: { 'Content-Type': 'application/json' },
+                                                            body: JSON.stringify({ status: 'approved' }),
+                                                        });
+                                                        loadPendingTherapists();
+                                                        loadTherapists();
+                                                    }}
+                                                >
+                                                    ✓ {t('approve')}
+                                                </button>
+                                                <button
+                                                    className="btn btn-secondary btn-sm"
+                                                    onClick={async () => {
+                                                        const reason = prompt(t('rejectionReasonPlaceholder'));
+                                                        if (reason !== null) {
+                                                            await fetch(`/api/admin/therapists/${th.id}`, {
+                                                                method: 'PATCH',
+                                                                headers: { 'Content-Type': 'application/json' },
+                                                                body: JSON.stringify({ status: 'rejected', rejection_reason: reason || null }),
+                                                            });
+                                                            loadPendingTherapists();
+                                                            loadTherapists();
+                                                        }
+                                                    }}
+                                                >
+                                                    ✗ {t('reject')}
+                                                </button>
+                                                <button
+                                                    className="btn btn-sm"
+                                                    onClick={() => openEdit('therapist', th)}
+                                                >
+                                                    ✏️ {t('edit')}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </>
+                        )}
                     </div>
                 )}
 
@@ -457,6 +548,77 @@ export default function AdminPage() {
                                 </div>
                             ))}
                             {therapists.length === 0 && (
+                                <div className={styles.emptyRow}>{t('noItems')}</div>
+                            )}
+                        </div>
+                    </div>
+                )}
+
+                {/* Users Tab (Admin only) */}
+                {tab === 'users' && isAdmin && (
+                    <div className={styles.section}>
+                        <div className={styles.sectionHeader}>
+                            <h2>👥 {locale === 'es' ? 'Gestionar Usuarios y Strikes' : 'Manage Users and Strikes'}</h2>
+                        </div>
+
+                        <div className={styles.table}>
+                            <div className={styles.tableHeader}>
+                                <span className={styles.colTitle}>{t('colName')}</span>
+                                <span className={styles.colType}>Rol</span>
+                                <span className={styles.colWorldview}>Strikes</span>
+                                <span className={styles.colActions}>{t('colActions')}</span>
+                            </div>
+                            {users.map((u) => (
+                                <div key={u.id} className={styles.tableRow}>
+                                    <span className={styles.colTitle}>
+                                        {u.display_name || 'Anonymous'}
+                                        <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-muted)' }}>{u.id}</div>
+                                    </span>
+                                    <span className={styles.colType}>
+                                        <span className={`badge ${u.role === 'admin' ? 'badge-alert' : u.role === 'moderator' ? 'badge-primary' : 'badge-sage'}`}>
+                                            {u.role || 'user'}
+                                        </span>
+                                    </span>
+                                    <span className={styles.colWorldview}>
+                                        <span className={`badge ${u.strikes >= 3 ? 'badge-alert' : u.strikes > 0 ? 'badge-warm' : 'badge-calm'}`}>
+                                            {u.strikes || 0}
+                                        </span>
+                                    </span>
+                                    <span className={styles.colActions}>
+                                        <button
+                                            className="btn btn-secondary btn-sm"
+                                            onClick={async () => {
+                                                await fetch(`/api/admin/users/${u.id}/strikes`, {
+                                                    method: 'PATCH',
+                                                    headers: { 'Content-Type': 'application/json' },
+                                                    body: JSON.stringify({ action: 'increment' })
+                                                });
+                                                loadUsers();
+                                            }}
+                                            title="Add Strike"
+                                        >
+                                            + Strike
+                                        </button>
+                                        <button
+                                            className="btn btn-sm"
+                                            style={{ marginLeft: '4px' }}
+                                            onClick={async () => {
+                                                await fetch(`/api/admin/users/${u.id}/strikes`, {
+                                                    method: 'PATCH',
+                                                    headers: { 'Content-Type': 'application/json' },
+                                                    body: JSON.stringify({ action: 'decrement' })
+                                                });
+                                                loadUsers();
+                                            }}
+                                            title="Remove Strike"
+                                            disabled={!u.strikes || u.strikes === 0}
+                                        >
+                                            - Strike
+                                        </button>
+                                    </span>
+                                </div>
+                            ))}
+                            {users.length === 0 && (
                                 <div className={styles.emptyRow}>{t('noItems')}</div>
                             )}
                         </div>

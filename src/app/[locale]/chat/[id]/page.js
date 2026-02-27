@@ -78,8 +78,41 @@ export default function ChatViewPage() {
 
     // Init: load user, conversation, messages
     useEffect(() => {
+        // Capture refs so cleanup can always remove channels even if unmount
+        // happens before the async init finishes
+        let supabaseClient = null;
+        let messagesChannel = null;
+        let participantsChannel = null;
+
+        const loadParticipants = async (supabase, userId, userProfile) => {
+            const { data: participantsData, error: partErr } = await supabase
+                .from('conversation_participants')
+                .select('user_id, profiles(*)')
+                .eq('conversation_id', conversationId);
+
+            if (partErr) {
+                console.error("Error loading participants:", partErr.message || JSON.stringify(partErr));
+                return;
+            }
+
+            if (participantsData) {
+                const loadedParticipants = participantsData.map(p => ({
+                    user_id: p.user_id,
+                    ...p.profiles
+                }));
+
+                if (userId && !loadedParticipants.some(p => p.user_id === userId) && userProfile) {
+                    loadedParticipants.unshift({ user_id: userId, ...userProfile });
+                }
+
+                setParticipants(loadedParticipants);
+            }
+        };
+
         const init = async () => {
             const supabase = createClient();
+            supabaseClient = supabase;
+
             const { data: { user } } = await supabase.auth.getUser();
 
             if (!user) {
@@ -105,31 +138,24 @@ export default function ChatViewPage() {
             setConversation(conv);
 
             if (!conv?.ai_agent_type) {
-                // Load participants
-                const { data: participantsData, error: partErr } = await supabase
-                    .from('conversation_participants')
-                    .select('user_id, profiles(*)')
-                    .eq('conversation_id', conversationId);
+                await loadParticipants(supabase, user.id, userProfile);
 
-                if (partErr) {
-                    console.error("Error loading participants:", partErr.message || JSON.stringify(partErr));
-                }
-
-                if (participantsData) {
-                    const loadedParticipants = participantsData.map(p => ({
-                        user_id: p.user_id,
-                        ...p.profiles
-                    }));
-
-                    if (!loadedParticipants.some(p => p.user_id === user.id) && userProfile) {
-                        loadedParticipants.unshift({
-                            user_id: user.id,
-                            ...userProfile
-                        });
-                    }
-
-                    setParticipants(loadedParticipants);
-                }
+                // Subscribe to participant changes in real-time
+                participantsChannel = supabase
+                    .channel(`participants:${conversationId}`)
+                    .on(
+                        'postgres_changes',
+                        {
+                            event: '*',
+                            schema: 'public',
+                            table: 'conversation_participants',
+                            filter: `conversation_id=eq.${conversationId}`,
+                        },
+                        () => {
+                            loadParticipants(supabase, user.id, userProfile);
+                        }
+                    )
+                    .subscribe();
             }
 
             // Load messages
@@ -143,7 +169,7 @@ export default function ChatViewPage() {
             setLoading(false);
 
             // Subscribe to new messages via Supabase Realtime
-            const channel = supabase
+            messagesChannel = supabase
                 .channel(`messages:${conversationId}`)
                 .on(
                     'postgres_changes',
@@ -173,13 +199,17 @@ export default function ChatViewPage() {
                     }
                 )
                 .subscribe();
-
-            return () => {
-                supabase.removeChannel(channel);
-            };
         };
 
         init();
+
+        // Cleanup runs on unmount or when conversationId changes
+        return () => {
+            if (supabaseClient) {
+                if (messagesChannel) supabaseClient.removeChannel(messagesChannel);
+                if (participantsChannel) supabaseClient.removeChannel(participantsChannel);
+            }
+        };
     }, [conversationId, locale, router]);
 
     const handleSaveSettings = async (e) => {

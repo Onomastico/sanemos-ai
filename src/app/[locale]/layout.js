@@ -25,7 +25,23 @@ export default async function LocaleLayout({ children, params }) {
     const messages = await getMessages();
 
     return (
-        <html lang={locale}>
+        <html lang={locale} suppressHydrationWarning>
+            <head>
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                            (function() {
+                                try {
+                                    var theme = localStorage.getItem('theme');
+                                    if (theme === 'light') {
+                                        document.documentElement.setAttribute('data-theme', 'light');
+                                    }
+                                } catch (e) {}
+                            })();
+                        `,
+                    }}
+                />
+            </head>
             <body>
                 <NextIntlClientProvider messages={messages}>
                     <Navbar />

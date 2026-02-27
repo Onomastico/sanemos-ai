@@ -4,7 +4,7 @@
     left: 0;
     right: 0;
     z-index: 100;
-    background: rgba(15, 25, 35, 0.85);
+    background: var(--bg-overlay);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border-light);
@@ -30,16 +30,10 @@
     padding: 0;
 }
 
-.logoIcon {
-    font-size: 1.5rem;
-}
-
-.logoText {
-    font-family: var(--font-heading);
-    font-size: var(--font-size-lg);
-    font-weight: 700;
-    color: var(--text-primary);
-    letter-spacing: -0.5px;
+.logoImage {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
 }
 
 .navLinks {
@@ -63,6 +57,23 @@
 .navLink:hover {
     color: var(--text-primary);
     background: var(--bg-elevated);
+}
+
+.profileLink {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.navAvatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.navAvatarPlaceholder {
+    font-size: 1.2rem;
 }
 
 .logoutLink {
@@ -184,7 +195,7 @@
         right: 0;
         bottom: 0;
         flex-direction: column;
-        background: rgba(15, 25, 35, 0.95);
+        background: var(--bg-overlay);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         padding: var(--space-lg) var(--space-xl);

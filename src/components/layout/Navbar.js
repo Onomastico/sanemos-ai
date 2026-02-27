@@ -17,6 +17,7 @@ export default function Navbar() {
     const [loading, setLoading] = useState(true);
     const [isStaff, setIsStaff] = useState(false);
     const [profile, setProfile] = useState(null);
+    const [theme, setTheme] = useState('dark');
 
     const locale = pathname.split('/')[1] || 'en';
     const otherLocale = locale === 'en' ? 'es' : 'en';
@@ -40,6 +41,13 @@ export default function Navbar() {
                 setProfile(null);
             }
         });
+
+        // Initialize Theme from localStorage
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme === 'light') {
+            setTheme('light');
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
 
         return () => {
             subscription.unsubscribe();
@@ -66,12 +74,26 @@ export default function Navbar() {
         setMenuOpen(false);
     };
 
+    const toggleTheme = () => {
+        const newTheme = theme === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
+        if (newTheme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+        }
+    };
+
     return (
         <nav className={styles.navbar}>
             <div className={styles.container}>
                 <button className={styles.logo} onClick={() => navigateTo('/')}>
-                    <span className={styles.logoIcon}>🌿</span>
-                    <span className={styles.logoText}>{tCommon('appName')}</span>
+                    <img
+                        src={theme === 'light' ? '/sanemos_logo.png' : '/sanemos_logo_2.png'}
+                        alt="sanemos.ai logo"
+                        className={styles.logoImage}
+                    />
                 </button>
 
                 <div className={`${styles.navLinks} ${menuOpen ? styles.navLinksOpen : ''}`}>
@@ -100,7 +122,12 @@ export default function Navbar() {
                                     <button className={styles.navLink} onClick={() => navigateTo('/dashboard')}>
                                         {t('dashboard')}
                                     </button>
-                                    <button className={styles.navLink} onClick={() => navigateTo('/profile')}>
+                                    <button className={`${styles.navLink} ${styles.profileLink}`} onClick={() => navigateTo('/profile')}>
+                                        {profile?.avatar_url ? (
+                                            <img src={profile.avatar_url} alt="Profile" className={styles.navAvatar} />
+                                        ) : (
+                                            <span className={styles.navAvatarPlaceholder}>👤</span>
+                                        )}
                                         {t('profile')}
                                     </button>
                                     {isStaff && (
@@ -124,11 +151,15 @@ export default function Navbar() {
                             )}
                         </>
                     )}
-
+                    <div className={styles.navDivider} />
                     <div className={styles.onlineBadge} title={tCommon('onlineUsers') || 'Online Users'}>
                         <span className={styles.onlineDot}></span>
                         <span>{onlineCount} online</span>
                     </div>
+
+                    <button className={styles.langToggle} onClick={toggleTheme} title="Toggle Theme" aria-label="Toggle Theme">
+                        {theme === 'light' ? '🌙' : '☀️'}
+                    </button>
 
                     <button className={styles.langToggle} onClick={switchLocale} title="Switch language">
                         {otherLocale.toUpperCase()}
