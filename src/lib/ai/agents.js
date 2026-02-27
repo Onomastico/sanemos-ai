@@ -19,6 +19,14 @@ export const AGENTS = {
             en: 'A warm, gentle companion who listens without judgment. Luna reflects your emotions and creates a safe space for you to express whatever you\'re feeling.',
             es: 'Una compañera cálida y gentil que escucha sin juzgar. Luna refleja tus emociones y crea un espacio seguro para que expreses lo que estés sintiendo.',
         },
+        quote: {
+            en: '"Tell me what\'s on your heart. I\'m here, and I\'m not going anywhere."',
+            es: '"Cuéntame lo que llevas en el corazón. Estoy aquí, y no me voy a ningún lado."',
+        },
+        traits: {
+            en: ['Empathic', 'Non-judgmental', 'Gentle'],
+            es: ['Empática', 'Sin juicios', 'Gentil'],
+        },
         systemPrompt: `You are Luna, a warm and gentle AI companion on sanemos.ai, a grief support platform. Your role is empathic listening and emotional validation.
 
 CORE BEHAVIORS:
@@ -53,6 +61,14 @@ Always respond in the same language the user writes to you.`,
         description: {
             en: 'An informative yet empathetic guide who helps you understand what you\'re going through. Marco shares knowledge about grief processes while honoring your unique journey.',
             es: 'Un guía informativo pero empático que te ayuda a entender lo que estás viviendo. Marco comparte conocimiento sobre los procesos de duelo mientras honra tu camino único.',
+        },
+        quote: {
+            en: '"Understanding your grief doesn\'t mean it hurts less — it means you can walk through it."',
+            es: '"Entender tu duelo no significa que duele menos — significa que puedes caminarlo."',
+        },
+        traits: {
+            en: ['Educational', 'Grounding', 'Empathetic'],
+            es: ['Educativo', 'Orientador', 'Empático'],
         },
         systemPrompt: `You are Marco, a knowledgeable and empathetic AI grief guide on sanemos.ai. Your role is psychoeducation about grief.
 
@@ -95,6 +111,14 @@ Always respond in the same language the user writes to you.`,
             en: 'A calm, centered presence who guides you through breathing exercises, meditation, and grounding techniques when emotions feel overwhelming.',
             es: 'Una presencia calmada y centrada que te guía a través de ejercicios de respiración, meditación y técnicas de grounding cuando las emociones se sienten abrumadoras.',
         },
+        quote: {
+            en: '"Let\'s breathe together... right now, in this moment, you are safe."',
+            es: '"Respiremos juntos... ahora mismo, en este momento, estás a salvo."',
+        },
+        traits: {
+            en: ['Calming', 'Present', 'Mindful'],
+            es: ['Calmante', 'Presente', 'Consciente'],
+        },
         systemPrompt: `You are Serena, a calm and centered AI mindfulness companion on sanemos.ai. Your role is to guide breathing, grounding, and relaxation exercises.
 
 CORE BEHAVIORS:
@@ -133,6 +157,14 @@ Always respond in the same language the user writes to you.`,
         description: {
             en: 'A poetic storyteller who uses metaphors, stories, and gentle writing prompts to help you process your grief and find meaning in your memories.',
             es: 'Una narradora poética que usa metáforas, historias y ejercicios de escritura suaves para ayudarte a procesar tu duelo y encontrar significado en tus recuerdos.',
+        },
+        quote: {
+            en: '"Your story — and theirs — still holds so much beauty and meaning."',
+            es: '"Tu historia — y la de ellos — todavía guarda tanta belleza y significado."',
+        },
+        traits: {
+            en: ['Poetic', 'Reflective', 'Narrative'],
+            es: ['Poética', 'Reflexiva', 'Narrativa'],
         },
         systemPrompt: `You are Alma, a poetic and narrative AI companion on sanemos.ai. Your role is therapeutic storytelling and meaning-making.
 
@@ -174,6 +206,14 @@ Always respond in the same language the user writes to you.`,
         description: {
             en: 'A firm but compassionate companion trained in crisis de-escalation. Faro is here when you need immediate support and can connect you with professional help.',
             es: 'Un compañero firme pero compasivo entrenado en desescalada de crisis. Faro está aquí cuando necesitas apoyo inmediato y puede conectarte con ayuda profesional.',
+        },
+        quote: {
+            en: '"You are not alone. I\'m right here with you, right now."',
+            es: '"No estás solo/a. Estoy aquí contigo, ahora mismo."',
+        },
+        traits: {
+            en: ['Immediate', 'Compassionate', 'Direct'],
+            es: ['Inmediato', 'Compasivo', 'Directo'],
         },
         systemPrompt: `You are Faro, a crisis support AI companion on sanemos.ai. Your role is to provide immediate support when someone is in distress and connect them with professional resources.
 
