@@ -25,6 +25,8 @@ export function PresenceProvider({ children }) {
                 .eq('id', user.id)
                 .single();
             const profile = data || { id: user.id };
+            // Fallback name from auth metadata (email prefix or full_name)
+            profile._authName = user.user_metadata?.full_name || user.email?.split('@')[0];
             setProfileData(profile);
             setProfileId(profile.id);
         };
@@ -64,7 +66,7 @@ export function PresenceProvider({ children }) {
                 if (status === 'SUBSCRIBED') {
                     await room.track({
                         id: profileId,
-                        name: profileData?.display_name || 'Anonymous',
+                        name: profileData?.display_name || profileData?._authName || 'Anonymous',
                         loss_type: profileData?.loss_type || null,
                         worldview: profileData?.worldview || null,
                         avatar: profileData?.avatar_url || null,
