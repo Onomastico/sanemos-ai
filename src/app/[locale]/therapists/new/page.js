@@ -51,16 +51,15 @@ export default function AddTherapistPage() {
         }
 
         setLoading(true);
-        const supabase = createClient();
 
         const langArray = languages.split(',').map(s => s.trim()).filter(Boolean);
         const specArray = specializations.split(',').map(s => s.trim()).filter(Boolean);
 
-        const { error: insertError } = await supabase
-            .from('therapists')
-            .insert({
-                user_id: user.id,
-                full_name: fullName,
+        const res = await fetch('/api/therapists', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                fullName,
                 title: title || null,
                 bio: bio || null,
                 email: email || null,
@@ -70,12 +69,11 @@ export default function AddTherapistPage() {
                 modality,
                 languages: langArray.length ? langArray : ['es'],
                 specializations: specArray,
-                license_number: licenseNumber || null,
-                status: 'pending' // As configured in the db schema migration
-            });
+                licenseNumber: licenseNumber || null,
+            }),
+        });
 
-        if (insertError) {
-            console.error(insertError);
+        if (!res.ok) {
             setError(tAuth('genericError') || 'An error occurred.');
             setLoading(false);
             return;

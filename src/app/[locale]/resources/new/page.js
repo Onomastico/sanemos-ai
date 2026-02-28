@@ -61,41 +61,28 @@ export default function AddResourcePage() {
         }
 
         setLoading(true);
-        const supabase = createClient();
 
-        // Insert resource as pending review
-        const { data: resource, error: insertError } = await supabase
-            .from('resources')
-            .insert({
+        const res = await fetch('/api/resources', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
                 title,
                 description,
                 type,
                 worldview,
-                external_url: externalUrl || null,
-                cover_url: coverUrl || null,
-                author_or_creator: authorOrCreator || null,
-                focus_theme: focusTheme || null,
+                externalUrl: externalUrl || null,
+                coverUrl: coverUrl || null,
+                authorOrCreator: authorOrCreator || null,
+                focusTheme: focusTheme || null,
                 availability: availability || null,
-                created_by: user.id,
-                status: 'pending',
-            })
-            .select()
-            .single();
+                lossTypes,
+            }),
+        });
 
-        if (insertError) {
+        if (!res.ok) {
             setError(tAuth('genericError'));
             setLoading(false);
             return;
-        }
-
-        // Insert loss types
-        if (lossTypes.length > 0) {
-            await supabase.from('resource_loss_types').insert(
-                lossTypes.map((lt) => ({
-                    resource_id: resource.id,
-                    loss_type: lt,
-                }))
-            );
         }
 
         setSuccess(true);

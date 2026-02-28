@@ -3,6 +3,12 @@ import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createAIProvider } from '@/lib/ai/provider';
 import { getAgent } from '@/lib/ai/agents';
+import { moderateMessage } from '@/lib/moderation';
+
+// Strikes threshold before auto-suspension
+const STRIKES_BEFORE_SUSPEND = 3;
+// Auto-suspension duration in hours
+const SUSPENSION_HOURS = 24;
 
 export async function POST(request) {
     const supabase = await createClient();
@@ -56,12 +62,68 @@ export async function POST(request) {
         }
     }
 
+    // ── Chat moderation (community/public/private — skip for AI conversations) ──
+    let moderationStatus = 'pass';
+    if (conversation.type !== 'ai') {
+        // Check if the user is suspended
+        const { data: senderProfile } = await admin
+            .from('profiles')
+            .select('strikes, is_suspended, suspended_until')
+            .eq('id', user.id)
+            .single();
+
+        if (senderProfile?.is_suspended) {
+            const until = senderProfile.suspended_until;
+            if (!until || new Date(until) > new Date()) {
+                return NextResponse.json(
+                    { error: 'suspended', message: 'Your account is temporarily suspended due to multiple violations.' },
+                    { status: 403 }
+                );
+            }
+            // Suspension expired — lift it automatically
+            await admin.from('profiles').update({ is_suspended: false }).eq('id', user.id);
+        }
+
+        // Moderate the message before saving
+        const modResult = await moderateMessage(content, admin);
+
+        if (modResult.decision === 'violation') {
+            // Increment strikes and potentially suspend
+            const currentStrikes = senderProfile?.strikes || 0;
+            const newStrikes = currentStrikes + 1;
+            const shouldSuspend = newStrikes >= STRIKES_BEFORE_SUSPEND;
+            const suspendedUntil = shouldSuspend
+                ? new Date(Date.now() + SUSPENSION_HOURS * 60 * 60 * 1000).toISOString()
+                : null;
+
+            await admin.from('profiles').update({
+                strikes: newStrikes,
+                ...(shouldSuspend ? { is_suspended: true, suspended_until: suspendedUntil } : {}),
+            }).eq('id', user.id);
+
+            return NextResponse.json(
+                {
+                    error: 'moderation_violation',
+                    reason: modResult.reason,
+                    strikes: newStrikes,
+                    suspended: shouldSuspend,
+                },
+                { status: 422 }
+            );
+        }
+
+        if (modResult.decision === 'warn') {
+            moderationStatus = 'warn';
+        }
+    }
+
     // Save user's message
     const { error: msgError } = await admin.from('messages').insert({
         conversation_id: conversationId,
         sender_id: user.id,
         content,
         sender_type: 'user',
+        ...(moderationStatus !== 'pass' ? { is_flagged: true, moderation_status: moderationStatus } : {}),
     });
 
     if (msgError) {

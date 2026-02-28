@@ -17,6 +17,7 @@ export default function RegisterPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [termsAccepted, setTermsAccepted] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -29,6 +30,7 @@ export default function RegisterPage() {
         if (!password) return setError(t('passwordRequired'));
         if (password.length < 6) return setError(t('passwordMinLength'));
         if (password !== confirmPassword) return setError(t('passwordMismatch'));
+        if (!termsAccepted) return setError(t('termsRequired'));
 
         setLoading(true);
         const supabase = createClient();
@@ -116,6 +118,51 @@ export default function RegisterPage() {
                             placeholder="••••••••"
                             autoComplete="new-password"
                         />
+                    </div>
+
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: '0.625rem',
+                        padding: '0.75rem',
+                        background: 'var(--surface-alt, var(--surface))',
+                        border: '1px solid var(--border)',
+                        borderRadius: 'var(--radius-md)',
+                    }}>
+                        <input
+                            id="termsAccepted"
+                            type="checkbox"
+                            checked={termsAccepted}
+                            onChange={(e) => setTermsAccepted(e.target.checked)}
+                            style={{ marginTop: '2px', flexShrink: 0, accentColor: 'var(--primary)', width: '16px', height: '16px', cursor: 'pointer' }}
+                        />
+                        <label htmlFor="termsAccepted" style={{ fontSize: 'var(--font-size-sm)', color: 'var(--text-secondary)', lineHeight: '1.5', cursor: 'pointer' }}>
+                            {locale === 'es' ? (
+                                <>
+                                    He leído y acepto los{' '}
+                                    <a href={`/${locale}/terms`} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary)', textDecoration: 'underline' }}>
+                                        Términos y Condiciones
+                                    </a>
+                                    {' '}y las{' '}
+                                    <a href={`/${locale}/rules`} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary)', textDecoration: 'underline' }}>
+                                        Normas de la Comunidad
+                                    </a>
+                                    {' '}de sanemos.ai. Declaro tener al menos 16 años.
+                                </>
+                            ) : (
+                                <>
+                                    I have read and agree to the{' '}
+                                    <a href={`/${locale}/terms`} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary)', textDecoration: 'underline' }}>
+                                        Terms and Conditions
+                                    </a>
+                                    {' '}and the{' '}
+                                    <a href={`/${locale}/rules`} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary)', textDecoration: 'underline' }}>
+                                        Community Guidelines
+                                    </a>
+                                    {' '}of sanemos.ai. I confirm I am at least 16 years old.
+                                </>
+                            )}
+                        </label>
                     </div>
 
                     <button type="submit" className="btn btn-primary btn-lg" disabled={loading} style={{ width: '100%' }}>

@@ -128,17 +128,16 @@ export default function ResourceDetailPage() {
         if (!rating) return;
         setSubmitting(true);
 
-        const supabase = createClient();
-        const { error } = await supabase.from('resource_reviews').insert({
-            resource_id: resourceId,
-            user_id: user.id,
-            rating,
-            comment: comment || null,
-            status: 'pending',
+        const res = await fetch(`/api/resources/${resourceId}/reviews`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ rating, comment: comment || null }),
         });
 
-        if (!error) {
-            showToast(t('reviewPending'));
+        if (res.ok) {
+            const data = await res.json();
+            const msg = data.aiDecision === 'approved' ? t('reviewApproved') : t('reviewPending');
+            showToast(msg);
             setHasReviewed(true);
             setRating(0);
             setComment('');

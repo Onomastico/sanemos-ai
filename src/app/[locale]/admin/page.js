@@ -116,16 +116,47 @@ export default function AdminPage() {
 
     const handleToggleAIProvider = async (provider) => {
         setSavingSettings(true);
-        // Optimistic update
         setSettings(prev => ({ ...prev, active_ai_provider: provider }));
-
         await fetch('/api/admin/settings', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ key: 'active_ai_provider', value: provider }),
         });
-
         setSavingSettings(false);
+    };
+
+    const handleToggleSetting = async (key, value) => {
+        setSavingSettings(true);
+        setSettings(prev => ({ ...prev, [key]: value }));
+        await fetch('/api/admin/settings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ key, value }),
+        });
+        setSavingSettings(false);
+    };
+
+    const aiModerationBadge = (result) => {
+        if (!result) return null;
+        const { decision, reason, confidence } = result;
+        const pct = Math.round((confidence || 0) * 100);
+        let color, label;
+        if (decision === 'approve') {
+            color = 'var(--accent-calm)';
+            label = locale === 'es' ? `Aprobar sugerido (${pct}%)` : `Approve suggested (${pct}%)`;
+        } else if (decision === 'reject') {
+            color = 'var(--accent-alert)';
+            label = locale === 'es' ? `Rechazar sugerido (${pct}%)` : `Reject suggested (${pct}%)`;
+        } else {
+            color = 'var(--text-muted)';
+            label = locale === 'es' ? `Incierto (${pct}%)` : `Uncertain (${pct}%)`;
+        }
+        return (
+            <div style={{ marginTop: 'var(--space-sm)', padding: 'var(--space-xs) var(--space-sm)', borderRadius: 'var(--radius-md)', background: 'var(--bg-primary)', border: `1px solid ${color}`, display: 'inline-flex', flexDirection: 'column', gap: 2, maxWidth: '100%' }}>
+                <span style={{ fontSize: 'var(--font-size-xs)', fontWeight: 600, color }}>🤖 {label}</span>
+                {reason && <span style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-secondary)' }}>{reason}</span>}
+            </div>
+        );
     };
 
     const handleApprove = async (id) => {
@@ -336,6 +367,25 @@ export default function AdminPage() {
                                                 🔗 {r.external_url}
                                             </a>
                                         )}
+                                        {r.cover_url && (
+                                            <div style={{ marginTop: 'var(--space-sm)' }}>
+                                                <span style={{ fontSize: 'var(--font-size-xs)', color: 'var(--accent-alert)', fontWeight: 600 }}>
+                                                    ⚠️ Cover image (verify before approving):
+                                                </span>
+                                                <div style={{ marginTop: 'var(--space-xs)', display: 'flex', alignItems: 'flex-start', gap: 'var(--space-sm)' }}>
+                                                    <img
+                                                        src={r.cover_url}
+                                                        alt="Cover"
+                                                        style={{ width: 80, height: 110, objectFit: 'cover', borderRadius: 'var(--radius-md)', border: '2px solid var(--accent-alert)', flexShrink: 0 }}
+                                                        onError={(e) => { e.target.style.display = 'none'; }}
+                                                    />
+                                                    <a href={r.cover_url} target="_blank" rel="noopener noreferrer" className={styles.reviewCardLink} style={{ wordBreak: 'break-all' }}>
+                                                        {r.cover_url}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        )}
+                                        {aiModerationBadge(r.ai_moderation_result)}
                                         <div className={styles.reviewCardActions}>
                                             <button
                                                 className="btn btn-primary btn-sm"
@@ -385,6 +435,7 @@ export default function AdminPage() {
                                         {c.comment && (
                                             <p className={styles.reviewCardDesc}>{c.comment}</p>
                                         )}
+                                        {aiModerationBadge(c.ai_moderation_result)}
                                         <div className={styles.reviewCardActions}>
                                             <button
                                                 className="btn btn-primary btn-sm"
@@ -426,6 +477,7 @@ export default function AdminPage() {
                                             {th.bio && (
                                                 <p className={styles.reviewCardDesc}>{th.bio}</p>
                                             )}
+                                            {aiModerationBadge(th.ai_moderation_result)}
                                             <div className={styles.reviewCardActions}>
                                                 <button
                                                     className="btn btn-primary btn-sm"
@@ -655,6 +707,130 @@ export default function AdminPage() {
                                 >
                                     {settings.active_ai_provider === 'gemini' ? '✓ ' : ''} Gemini (Google)
                                 </button>
+                            </div>
+                        </div>
+
+                        {/* Moderation toggles */}
+                        <div className={styles.reviewCard} style={{ marginTop: 'var(--space-lg)' }}>
+                            <h3>🤖 {locale === 'es' ? 'Moderación de IA' : 'AI Moderation'}</h3>
+                            <p className={styles.reviewCardDesc}>
+                                {locale === 'es'
+                                    ? 'Controla qué tipos de contenido son revisados automáticamente por agentes de IA.'
+                                    : 'Control which content types are automatically reviewed by AI agents.'}
+                            </p>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)', marginTop: 'var(--space-md)' }}>
+                                {/* Resources moderation */}
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-md)' }}>
+                                    <div>
+                                        <div style={{ fontWeight: 600, fontSize: 'var(--font-size-sm)', color: 'var(--text-primary)' }}>
+                                            📚 {locale === 'es' ? 'Moderación de Recursos' : 'Resource Moderation'}
+                                        </div>
+                                        <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-muted)' }}>
+                                            {locale === 'es' ? 'Revisar automáticamente recursos enviados por usuarios' : 'Auto-review user-submitted resources'}
+                                        </div>
+                                    </div>
+                                    <div style={{ display: 'flex', gap: 'var(--space-xs)', flexShrink: 0 }}>
+                                        <button
+                                            className={`btn btn-sm ${settings.moderation_resources_enabled !== false ? 'btn-primary' : 'btn-secondary'}`}
+                                            onClick={() => handleToggleSetting('moderation_resources_enabled', true)}
+                                            disabled={savingSettings}
+                                        >
+                                            {settings.moderation_resources_enabled !== false ? '✓ ' : ''}{locale === 'es' ? 'Activo' : 'On'}
+                                        </button>
+                                        <button
+                                            className={`btn btn-sm ${settings.moderation_resources_enabled === false ? 'btn-primary' : 'btn-secondary'}`}
+                                            onClick={() => handleToggleSetting('moderation_resources_enabled', false)}
+                                            disabled={savingSettings}
+                                        >
+                                            {settings.moderation_resources_enabled === false ? '✓ ' : ''}{locale === 'es' ? 'Inactivo' : 'Off'}
+                                        </button>
+                                    </div>
+                                </div>
+                                {/* Reviews moderation */}
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-md)' }}>
+                                    <div>
+                                        <div style={{ fontWeight: 600, fontSize: 'var(--font-size-sm)', color: 'var(--text-primary)' }}>
+                                            💬 {locale === 'es' ? 'Moderación de Reseñas' : 'Review Moderation'}
+                                        </div>
+                                        <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-muted)' }}>
+                                            {locale === 'es' ? 'Revisar automáticamente reseñas enviadas por usuarios' : 'Auto-review user-submitted comments'}
+                                        </div>
+                                    </div>
+                                    <div style={{ display: 'flex', gap: 'var(--space-xs)', flexShrink: 0 }}>
+                                        <button
+                                            className={`btn btn-sm ${settings.moderation_reviews_enabled !== false ? 'btn-primary' : 'btn-secondary'}`}
+                                            onClick={() => handleToggleSetting('moderation_reviews_enabled', true)}
+                                            disabled={savingSettings}
+                                        >
+                                            {settings.moderation_reviews_enabled !== false ? '✓ ' : ''}{locale === 'es' ? 'Activo' : 'On'}
+                                        </button>
+                                        <button
+                                            className={`btn btn-sm ${settings.moderation_reviews_enabled === false ? 'btn-primary' : 'btn-secondary'}`}
+                                            onClick={() => handleToggleSetting('moderation_reviews_enabled', false)}
+                                            disabled={savingSettings}
+                                        >
+                                            {settings.moderation_reviews_enabled === false ? '✓ ' : ''}{locale === 'es' ? 'Inactivo' : 'Off'}
+                                        </button>
+                                    </div>
+                                </div>
+                                {/* Chat moderation */}
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-md)' }}>
+                                    <div>
+                                        <div style={{ fontWeight: 600, fontSize: 'var(--font-size-sm)', color: 'var(--text-primary)' }}>
+                                            🗣️ {locale === 'es' ? 'Moderación de Chats' : 'Chat Moderation'}
+                                        </div>
+                                        <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-muted)' }}>
+                                            {locale === 'es'
+                                                ? 'Filtrar mensajes inapropiados en salas comunitarias antes de que se guarden'
+                                                : 'Filter inappropriate messages in community rooms before they are saved'}
+                                        </div>
+                                    </div>
+                                    <div style={{ display: 'flex', gap: 'var(--space-xs)', flexShrink: 0 }}>
+                                        <button
+                                            className={`btn btn-sm ${settings.moderation_chat_enabled !== false ? 'btn-primary' : 'btn-secondary'}`}
+                                            onClick={() => handleToggleSetting('moderation_chat_enabled', true)}
+                                            disabled={savingSettings}
+                                        >
+                                            {settings.moderation_chat_enabled !== false ? '✓ ' : ''}{locale === 'es' ? 'Activo' : 'On'}
+                                        </button>
+                                        <button
+                                            className={`btn btn-sm ${settings.moderation_chat_enabled === false ? 'btn-primary' : 'btn-secondary'}`}
+                                            onClick={() => handleToggleSetting('moderation_chat_enabled', false)}
+                                            disabled={savingSettings}
+                                        >
+                                            {settings.moderation_chat_enabled === false ? '✓ ' : ''}{locale === 'es' ? 'Inactivo' : 'Off'}
+                                        </button>
+                                    </div>
+                                </div>
+                                {/* Therapist moderation */}
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-md)' }}>
+                                    <div>
+                                        <div style={{ fontWeight: 600, fontSize: 'var(--font-size-sm)', color: 'var(--text-primary)' }}>
+                                            🩺 {locale === 'es' ? 'Pre-screening de Terapeutas' : 'Therapist Pre-screening'}
+                                        </div>
+                                        <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-muted)' }}>
+                                            {locale === 'es'
+                                                ? 'La IA analiza terapeutas enviados por usuarios y genera un resumen para el admin'
+                                                : 'AI analyzes user-submitted therapists and generates a summary for the admin to review'}
+                                        </div>
+                                    </div>
+                                    <div style={{ display: 'flex', gap: 'var(--space-xs)', flexShrink: 0 }}>
+                                        <button
+                                            className={`btn btn-sm ${settings.moderation_therapists_enabled !== false ? 'btn-primary' : 'btn-secondary'}`}
+                                            onClick={() => handleToggleSetting('moderation_therapists_enabled', true)}
+                                            disabled={savingSettings}
+                                        >
+                                            {settings.moderation_therapists_enabled !== false ? '✓ ' : ''}{locale === 'es' ? 'Activo' : 'On'}
+                                        </button>
+                                        <button
+                                            className={`btn btn-sm ${settings.moderation_therapists_enabled === false ? 'btn-primary' : 'btn-secondary'}`}
+                                            onClick={() => handleToggleSetting('moderation_therapists_enabled', false)}
+                                            disabled={savingSettings}
+                                        >
+                                            {settings.moderation_therapists_enabled === false ? '✓ ' : ''}{locale === 'es' ? 'Inactivo' : 'Off'}
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

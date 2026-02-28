@@ -1,10 +1,14 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import styles from './Footer.module.css';
 
 export default function Footer() {
     const t = useTranslations('footer');
+    const pathname = usePathname();
+    const locale = pathname?.split('/')[1] || 'en';
     const year = new Date().getFullYear();
 
     return (
@@ -36,9 +40,32 @@ export default function Footer() {
                     </div>
                 </div>
 
+                <div className={styles.links}>
+                    <div className={styles.linksGroup}>
+                        <span className={styles.linksGroupTitle}>{t('linksProject')}</span>
+                        <Link href={`/${locale}/rules`} className={styles.footerLink}>{t('linkRules')}</Link>
+                        <Link href={`/${locale}/terms`} className={styles.footerLink}>{t('linkTerms')}</Link>
+                    </div>
+                    <div className={styles.linksGroup}>
+                        <span className={styles.linksGroupTitle}>{t('linksSupport')}</span>
+                        <Link href={`/${locale}/donate`} className={styles.footerLinkDonate}>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style={{ flexShrink: 0 }}>
+                                <path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/>
+                            </svg>
+                            {t('linkDonate')}
+                        </Link>
+                        <a href="mailto:contacto@sanemos.ai" className={styles.footerLink}>{t('linkContact')}</a>
+                    </div>
+                </div>
+
                 <div className={styles.crisis}>
                     <span className={styles.crisisIcon}>🚨</span>
-                    <p>{t('crisis')}</p>
+                    <p>
+                        {t('crisis')}{' '}
+                        <Link href={`/${locale}/crisis`} className={styles.crisisLink}>
+                            {t('crisisLink')}
+                        </Link>
+                    </p>
                 </div>
 
                 <div className={styles.bottom}>

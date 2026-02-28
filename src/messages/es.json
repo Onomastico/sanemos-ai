@@ -72,7 +72,11 @@
         "passwordMinLength": "La contraseña debe tener al menos 6 caracteres",
         "nameRequired": "El nombre es obligatorio",
         "genericError": "Algo salió mal. Por favor intenta de nuevo.",
-        "invalidCredentials": "Correo o contraseña inválidos"
+        "invalidCredentials": "Correo o contraseña inválidos",
+        "termsAccept": "He leído y acepto los {terms} y las {rules} de sanemos.ai. Declaro tener al menos 16 años.",
+        "termsLink": "Términos y Condiciones",
+        "rulesLink": "Normas de la Comunidad",
+        "termsRequired": "Debes aceptar los Términos y Condiciones para continuar."
     },
     "resources": {
         "title": "Recursos de Sanación",
@@ -147,6 +151,7 @@
         "reviewsLabel": "reseñas",
         "reviewsTitle": "Reseñas",
         "reviewPending": "Tu reseña ha sido enviada y está pendiente de aprobación.",
+        "reviewApproved": "¡Tu reseña ha sido publicada!",
         "reviewPendingNotice": "Tu reseña será visible después de la moderación.",
         "alreadyReviewed": "Ya has reseñado este recurso."
     },
@@ -193,7 +198,11 @@
         "requestError": "Error al enviar solicitud.",
         "realPeople": "Personas Reales",
         "untitledConversation": "Conversación sin título",
-        "viewProfile": "Ver perfil"
+        "viewProfile": "Ver perfil",
+        "messageBlocked": "Tu mensaje no fue enviado",
+        "sendError": "Error al enviar el mensaje. Por favor intenta de nuevo.",
+        "accountSuspendedMessage": "Tu cuenta ha sido suspendida temporalmente por múltiples infracciones. Por favor contacta soporte.",
+        "strikeCount": "{n} advertencia(s) en tu cuenta"
     },
     "therapists": {
         "title": "Directorio de Terapeutas",
@@ -332,6 +341,13 @@
     "footer": {
         "tagline": "No tienes que recorrer este camino solo/a.",
         "crisis": "Si estás en crisis, por favor contacta los servicios de emergencia locales o una línea de ayuda.",
-        "rights": "© {year} sanemos.ai. Todos los derechos reservados."
+        "crisisLink": "Ver líneas de crisis por país →",
+        "rights": "© {year} sanemos.ai. Todos los derechos reservados.",
+        "linksProject": "Proyecto",
+        "linksSupport": "Apóyanos",
+        "linkRules": "Normas de la Comunidad",
+        "linkTerms": "Términos y Condiciones",
+        "linkDonate": "Hacer una donación",
+        "linkContact": "Contacto"
     }
 }

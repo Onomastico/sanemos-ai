@@ -27,6 +27,10 @@ export const AGENTS = {
             en: ['Empathic', 'Non-judgmental', 'Gentle'],
             es: ['Empática', 'Sin juicios', 'Gentil'],
         },
+        bestFor: {
+            en: ['Feeling heard without judgment', 'Processing raw, difficult emotions', 'When you just need someone to sit with you'],
+            es: ['Sentirte escuchada/o sin juicios', 'Procesar emociones difíciles', 'Cuando solo necesitas compañía'],
+        },
         systemPrompt: `You are Luna, a warm and gentle AI companion on sanemos.ai, a grief support platform. Your role is empathic listening and emotional validation.
 
 CORE BEHAVIORS:
@@ -69,6 +73,10 @@ Always respond in the same language the user writes to you.`,
         traits: {
             en: ['Educational', 'Grounding', 'Empathetic'],
             es: ['Educativo', 'Orientador', 'Empático'],
+        },
+        bestFor: {
+            en: ['Understanding what grief is doing to you', 'Making sense of confusing emotions', 'Learning about grief stages and models'],
+            es: ['Entender lo que el duelo te está haciendo', 'Darle sentido a emociones confusas', 'Aprender sobre etapas del duelo'],
         },
         systemPrompt: `You are Marco, a knowledgeable and empathetic AI grief guide on sanemos.ai. Your role is psychoeducation about grief.
 
@@ -119,6 +127,10 @@ Always respond in the same language the user writes to you.`,
             en: ['Calming', 'Present', 'Mindful'],
             es: ['Calmante', 'Presente', 'Consciente'],
         },
+        bestFor: {
+            en: ['Moments of anxiety or overwhelm', 'Guided breathing and grounding exercises', 'Calming acute emotional distress'],
+            es: ['Momentos de ansiedad o agobio', 'Ejercicios de respiración y grounding', 'Calmar angustia emocional aguda'],
+        },
         systemPrompt: `You are Serena, a calm and centered AI mindfulness companion on sanemos.ai. Your role is to guide breathing, grounding, and relaxation exercises.
 
 CORE BEHAVIORS:
@@ -165,6 +177,10 @@ Always respond in the same language the user writes to you.`,
         traits: {
             en: ['Poetic', 'Reflective', 'Narrative'],
             es: ['Poética', 'Reflexiva', 'Narrativa'],
+        },
+        bestFor: {
+            en: ['Honoring and preserving memories', 'Reflective writing and storytelling', 'Finding meaning and connection in loss'],
+            es: ['Honrar y preservar memorias', 'Escritura reflexiva y narrativa', 'Encontrar significado en la pérdida'],
         },
         systemPrompt: `You are Alma, a poetic and narrative AI companion on sanemos.ai. Your role is therapeutic storytelling and meaning-making.
 
@@ -214,6 +230,10 @@ Always respond in the same language the user writes to you.`,
         traits: {
             en: ['Immediate', 'Compassionate', 'Direct'],
             es: ['Inmediato', 'Compasivo', 'Directo'],
+        },
+        bestFor: {
+            en: ['Crisis moments and overwhelming thoughts', 'Immediate grounding and support', 'Connecting to professional crisis resources'],
+            es: ['Momentos de crisis y pensamientos abrumadores', 'Grounding y apoyo inmediato', 'Conectar con recursos profesionales de crisis'],
         },
         systemPrompt: `You are Faro, a crisis support AI companion on sanemos.ai. Your role is to provide immediate support when someone is in distress and connect them with professional resources.
 

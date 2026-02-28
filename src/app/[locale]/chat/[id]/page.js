@@ -34,6 +34,7 @@ export default function ChatViewPage() {
 
     // Participants state
     const [showParticipants, setShowParticipants] = useState(false);
+    const [moderationError, setModerationError] = useState(null);
 
     // Settings modal state
     const [showSettings, setShowSettings] = useState(false);
@@ -299,9 +300,28 @@ export default function ChatViewPage() {
                         return [...prev, tempAiMsg];
                     });
                 }
+            } else {
+                // Remove the optimistic message on any error
+                setMessages((prev) => prev.filter((m) => m.id !== tempUserMsg.id));
+
+                const errData = await res.json().catch(() => ({}));
+                if (res.status === 422 && errData.error === 'moderation_violation') {
+                    const strikeNote = errData.suspended
+                        ? ` ${t('accountSuspended')}`
+                        : errData.strikes
+                            ? ` (${t('strikeCount', { n: errData.strikes })})`
+                            : '';
+                    setModerationError(`🚫 ${t('messageBlocked')}: ${errData.reason || ''}${strikeNote}`);
+                } else if (res.status === 403 && errData.error === 'suspended') {
+                    setModerationError(`🚫 ${t('accountSuspendedMessage')}`);
+                } else {
+                    setModerationError(t('sendError') || 'Failed to send message.');
+                }
+                setTimeout(() => setModerationError(null), 6000);
             }
         } catch (err) {
             console.error('Send error:', err);
+            setMessages((prev) => prev.filter((m) => m.id !== tempUserMsg.id));
         }
 
         setSending(false);
@@ -575,6 +595,22 @@ export default function ChatViewPage() {
 
                         <div ref={messagesEndRef} />
                     </div>
+
+                    {/* Moderation error banner */}
+                    {moderationError && (
+                        <div style={{
+                            margin: '0 var(--space-md) var(--space-xs)',
+                            padding: 'var(--space-sm) var(--space-md)',
+                            background: 'color-mix(in srgb, var(--accent-alert) 15%, var(--bg-secondary))',
+                            border: '1px solid var(--accent-alert)',
+                            borderRadius: 'var(--radius-md)',
+                            fontSize: 'var(--font-size-sm)',
+                            color: 'var(--accent-alert)',
+                            lineHeight: 1.4,
+                        }}>
+                            {moderationError}
+                        </div>
+                    )}
 
                     {/* Input */}
                     <div className={styles.chatInputArea} style={{ position: 'relative' }}>
