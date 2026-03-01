@@ -1,0 +1,83 @@
+.wrapper {
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    background: var(--bg-primary);
+    overflow: hidden;
+    transition: border-color var(--transition-base);
+}
+
+.wrapper:focus-within {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent-primary) 20%, transparent);
+}
+
+.toolbar {
+    display: flex;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-default);
+}
+
+.toolBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-sm);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: background var(--transition-base), border-color var(--transition-base);
+    user-select: none;
+}
+
+.toolBtn:hover:not(:disabled) {
+    background: var(--bg-tertiary);
+    border-color: var(--accent-primary);
+}
+
+.toolBtn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.editor {
+    min-height: 200px;
+    padding: var(--space-md);
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    color: var(--text-primary);
+    outline: none;
+    word-break: break-word;
+}
+
+.editor.disabled {
+    color: var(--text-muted);
+    cursor: not-allowed;
+}
+
+/* Placeholder text */
+.editor:empty::before {
+    content: attr(data-placeholder);
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+/* Prose styles inside the editor */
+.editor ul,
+.editor ol {
+    padding-left: 1.5rem;
+    margin: var(--space-sm) 0;
+}
+
+.editor li {
+    margin-bottom: var(--space-xs);
+}
+
+.editor p {
+    margin: 0 0 var(--space-sm);
+}

@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git push)",
+      "Bash(git add src/context/PresenceContext.js src/app/[locale]/layout.js src/components/layout/Navbar.js src/app/[locale]/chat/page.js)",
+      "Bash(git add src/context/PresenceContext.js)",
+      "Bash(git add src/lib/ai/agents.js src/components/companions/CompanionCard.js src/components/companions/CompanionCard.module.css)",
+      "Bash(ls -la /c/Users/Shorly-Game/.gemini/antigravity/scratch/sanemos-ai/src/app/[locale]/)",
+      "Bash(find /c/Users/Shorly-Game/.gemini/antigravity/scratch/sanemos-ai/src/app/[locale]/resources -type f)",
+      "Bash(ls \"c:\\\\Users\\\\Shorly-Game\\\\.gemini\\\\antigravity\\\\scratch\\\\sanemos-ai\\\\src\\\\app\\\\[locale]\\\\therapists\"\" 2>/dev/null || echo \"directory not found or empty \")",
+      "Bash(ls c:/Users/Shorly-Game/.gemini/antigravity/scratch/sanemos-ai/src/app/[locale]/therapists/)",
+      "Bash(ls c:/Users/Shorly-Game/.gemini/antigravity/scratch/sanemos-ai/src/app/[locale]/therapists/new/)",
+      "Bash(git add src/app/[locale]/admin/page.js \"src/app/[locale]/auth/register/page.js\" \"src/app/[locale]/chat/[id]/page.js\" \"src/app/[locale]/companions/[id]/page.js\" \"src/app/[locale]/companions/[id]/detail.module.css\" \"src/app/[locale]/resources/[id]/page.js\" \"src/app/[locale]/resources/new/page.js\" \"src/app/[locale]/rules/page.js\" \"src/app/[locale]/therapists/new/page.js\" \"src/app/[locale]/crisis/\" \"src/app/[locale]/donate/\" \"src/app/[locale]/terms/\" src/app/api/chat/send/route.js src/app/api/resources/ src/app/api/therapists/ src/components/layout/Footer.js src/components/layout/Footer.module.css src/lib/ai/agents.js src/lib/moderation/ src/messages/en.json src/messages/es.json supabase/migrations/019_ai_moderation.sql supabase/migrations/020_chat_moderation.sql supabase/migrations/021_therapist_moderation.sql)",
+      "Bash(git push origin main)",
+      "Bash(git add specs.md)",
+      "Bash(cat /c/Users/Shorly-Game/.gemini/antigravity/scratch/sanemos-ai/src/app/[locale]/admin/page.js)",
+      "Bash(wc -l /c/Users/Shorly-Game/.gemini/antigravity/scratch/sanemos-ai/src/app/[locale]/admin/page.js)",
+      "Bash(head -100 /c/Users/Shorly-Game/.gemini/antigravity/scratch/sanemos-ai/src/app/[locale]/admin/page.js)",
+      "Bash(npm install resend)",
+      "Bash(find /c/Users/Shorly-Game/.gemini/antigravity/scratch/sanemos-ai/src/app/[locale] -type f -name \"page.js\")",
+      "Bash(ls -la /c/Users/Shorly-Game/.gemini/antigravity/scratch/sanemos-ai/src/app/[locale]/chat/)",
+      "Bash(find /c/Users/Shorly-Game/.gemini/antigravity/scratch/sanemos-ai/src/app/[locale] -name \"page.js\" -type f)",
+      "WebFetch(domain:docs.google.com)",
+      "WebFetch(domain:doc-0g-3s-docstext.googleusercontent.com)"
+    ],
+    "additionalDirectories": [
+      "\\tmp",
+      "c:\\Users\\Shorly-Game\\.gemini\\antigravity\\scratch\\sanemos-ai\\src\\app\\[locale]\\profile"
+    ]
+  }
+}

@@ -45,6 +45,16 @@ export default function Footer() {
                         <span className={styles.linksGroupTitle}>{t('linksProject')}</span>
                         <Link href={`/${locale}/rules`} className={styles.footerLink}>{t('linkRules')}</Link>
                         <Link href={`/${locale}/terms`} className={styles.footerLink}>{t('linkTerms')}</Link>
+                        <Link href={`/${locale}/privacy`} className={styles.footerLink}>{t('linkPrivacy')}</Link>
+                        <Link href={`/${locale}/arco`} className={styles.footerLink}>{t('linkArco')}</Link>
+                        <Link href={`/${locale}/moderation-policy`} className={styles.footerLink}>{t('linkModerationPolicy')}</Link>
+                        <Link href={`/${locale}/appeal`} className={styles.footerLink}>{t('linkAppeal')}</Link>
+                    </div>
+                    <div className={styles.linksGroup}>
+                        <span className={styles.linksGroupTitle}>{t('linksCommunity')}</span>
+                        <Link href={`/${locale}/volunteers/apply`} className={styles.footerLink}>{t('linkVolunteer')}</Link>
+                        <Link href={`/${locale}/letters`} className={styles.footerLink}>{t('linkLetters')}</Link>
+                        <Link href={`/${locale}/community/journals`} className={styles.footerLink}>{t('linkCommunityJournals')}</Link>
                     </div>
                     <div className={styles.linksGroup}>
                         <span className={styles.linksGroupTitle}>{t('linksSupport')}</span>

@@ -28,7 +28,9 @@
     "dashboard": "Dashboard",
     "admin": "Admin",
     "profile": "Profile",
-    "companions": "AI Companions"
+    "companions": "AI Companions",
+    "journal": "Journal",
+    "letters": "Letters"
   },
   "landing": {
     "heroTitle": "Healing begins when you're not alone",
@@ -347,7 +349,36 @@
     "linksSupport": "Support us",
     "linkRules": "Community Guidelines",
     "linkTerms": "Terms and Conditions",
+    "linkPrivacy": "Privacy Policy",
+    "linkArco": "ARCO Rights",
+    "linkModerationPolicy": "Moderation Policy",
+    "linkAppeal": "Appeal a Decision",
     "linkDonate": "Make a donation",
-    "linkContact": "Contact"
+    "linkContact": "Contact",
+    "linksCommunity": "Community",
+    "linkVolunteer": "Become a volunteer",
+    "linkCommunityJournals": "Community Journals",
+    "linkLetters": "Community Letters"
+  },
+  "letters": {
+    "title": "Letters",
+    "subtitle": "Words written from grief, for those who need them",
+    "newLetter": "Write a letter",
+    "readFull": "Read full letter →",
+    "dailyLetter": "A letter for you",
+    "statusPending": "In review ⏳",
+    "statusApproved": "Public ✅",
+    "statusRejected": "Rejected ❌",
+    "rejectionNote": "Rejection reason",
+    "deleteConfirm": "Delete this letter?",
+    "comments": "Comments",
+    "addComment": "Add a comment",
+    "noLetters": "No approved letters yet.",
+    "filterLossType": "Type of loss",
+    "filterWorldview": "Worldview",
+    "filterAll": "All",
+    "loadMore": "Load more",
+    "hintText": "Letters are short messages for those going through grief. Share from your experience — your words may be exactly what someone needs to hear.",
+    "reviewWarning": "Your letter will go through a review before becoming visible to the community."
   }
 }

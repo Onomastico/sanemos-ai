@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add src/app/[locale]/admin/page.js src/app/[locale]/chat/[id]/page.js src/app/[locale]/chat/page.js src/app/[locale]/dashboard/page.js src/app/[locale]/layout.js src/app/[locale]/page.js src/app/[locale]/profile/profile.module.css \"src/app/[locale]/resources/[id]/resourceDetail.module.css\" src/app/api/admin/therapists/[id]/route.js src/app/api/admin/therapists/route.js src/app/api/chat/conversations/route.js src/app/globals.css src/components/layout/Footer.js src/components/layout/Footer.module.css src/components/layout/Navbar.js src/components/layout/Navbar.module.css src/hooks/usePresence.js src/messages/en.json src/messages/es.json)",
+      "Bash(git add public/sanemos_logo.png public/sanemos_logo_2.png src/app/[locale]/rules/ src/app/[locale]/therapists/new/ src/app/api/admin/users/ src/app/api/stats/ supabase/migrations/017_publish_conversations.sql supabase/migrations/018_strikes_and_therapists.sql test-stats.js)",
+      "Bash(git commit:*)"
+    ]
+  }
+}

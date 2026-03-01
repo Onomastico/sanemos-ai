@@ -1,0 +1,565 @@
+.page {
+    min-height: 100vh;
+    padding: var(--space-2xl) var(--space-lg) var(--space-xl);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────── */
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+}
+
+.title {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+/* ── View toggle ─────────────────────────────────────────────────────── */
+
+.viewToggle {
+    display: flex;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.viewBtn {
+    padding: var(--space-xs) var(--space-md);
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: background var(--transition-base), color var(--transition-base);
+}
+
+.viewBtn.active {
+    background: var(--accent-primary);
+    color: #fff;
+}
+
+/* ── Search & filters ────────────────────────────────────────────────── */
+
+.filters {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-lg);
+}
+
+.searchWrapper {
+    flex: 1;
+    min-width: 180px;
+    position: relative;
+}
+
+.searchIcon {
+    position: absolute;
+    left: var(--space-sm);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+.searchInput {
+    width: 100%;
+    padding: var(--space-sm) var(--space-sm) var(--space-sm) 2.2rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+}
+
+.filterSelect {
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+}
+
+/* ── Entry list ──────────────────────────────────────────────────────── */
+
+.entryList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.entryCard {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    cursor: pointer;
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+    text-decoration: none;
+    display: block;
+    color: inherit;
+}
+
+.entryCard:hover {
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-glow);
+}
+
+.entryCardTop {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-md);
+    margin-bottom: var(--space-sm);
+}
+
+.entryTitle {
+    font-weight: 600;
+    font-size: var(--font-size-base);
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.entryDate {
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.entryExcerpt {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0 0 var(--space-sm);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.entryTags {
+    display: flex;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.tag {
+    font-size: var(--font-size-xs);
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--bg-tertiary);
+    color: var(--text-muted);
+    border: 1px solid var(--border-default);
+}
+
+/* Moderation status badges */
+.statusBadge {
+    font-size: var(--font-size-xs);
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-weight: 500;
+}
+
+.statusPrivate {
+    background: var(--bg-tertiary);
+    color: var(--text-muted);
+    border: 1px solid var(--border-default);
+}
+
+.statusPending {
+    background: color-mix(in srgb, #f59e0b 15%, transparent);
+    color: #f59e0b;
+    border: 1px solid color-mix(in srgb, #f59e0b 30%, transparent);
+}
+
+.statusApproved {
+    background: color-mix(in srgb, var(--accent-calm) 15%, transparent);
+    color: var(--accent-calm);
+    border: 1px solid color-mix(in srgb, var(--accent-calm) 30%, transparent);
+}
+
+.statusRejected {
+    background: color-mix(in srgb, var(--accent-alert) 15%, transparent);
+    color: var(--accent-alert);
+    border: 1px solid color-mix(in srgb, var(--accent-alert) 30%, transparent);
+}
+
+/* ── Empty state ─────────────────────────────────────────────────────── */
+
+.empty {
+    text-align: center;
+    padding: var(--space-3xl) var(--space-lg);
+    color: var(--text-muted);
+}
+
+.emptyIcon {
+    font-size: 3rem;
+    margin-bottom: var(--space-md);
+}
+
+.emptyText {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--space-lg);
+}
+
+/* ── Calendar ────────────────────────────────────────────────────────── */
+
+.calendarNav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-md);
+}
+
+.calendarNavBtn {
+    background: none;
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    padding: var(--space-xs) var(--space-sm);
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    transition: border-color var(--transition-base);
+}
+
+.calendarNavBtn:hover {
+    border-color: var(--accent-primary);
+}
+
+.calendarMonthLabel {
+    font-weight: 600;
+    font-size: var(--font-size-base);
+    color: var(--text-primary);
+}
+
+.calendarGrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    margin-bottom: var(--space-lg);
+}
+
+.calendarDayHeader {
+    text-align: center;
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    font-weight: 600;
+    padding: var(--space-xs);
+}
+
+.calendarCell {
+    min-height: 72px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 5px 4px 6px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-secondary);
+    cursor: default;
+    position: relative;
+    gap: 3px;
+    overflow: hidden;
+}
+
+.calendarCell.hasEntries {
+    background: color-mix(in srgb, var(--accent-primary) 5%, var(--bg-secondary));
+    border: 1px solid color-mix(in srgb, var(--accent-primary) 20%, transparent);
+}
+
+.calendarCell.isToday {
+    border: 1px solid var(--accent-primary);
+}
+
+.calendarCell.otherMonth {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.calendarDayNum {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    font-weight: 600;
+    line-height: 1;
+    align-self: flex-end;
+    margin-bottom: 2px;
+    width: 100%;
+    text-align: right;
+    padding-right: 2px;
+}
+
+.calendarEntryBadge {
+    display: block;
+    width: 100%;
+    padding: 2px 5px;
+    border-radius: 4px;
+    background: var(--accent-primary);
+    color: #fff;
+    font-size: 10px;
+    line-height: 1.3;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity var(--transition-base);
+    flex-shrink: 0;
+}
+
+.calendarEntryBadge:hover {
+    opacity: 0.85;
+}
+
+.calendarEntryBadgePublic {
+    background: var(--accent-calm);
+}
+
+/* Dot kept for cells with more entries than shown */
+.calendarDot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    margin-top: 1px;
+    background: var(--accent-primary);
+    flex-shrink: 0;
+}
+
+.calendarDotPublic {
+    background: var(--accent-calm);
+}
+
+/* Day entries panel */
+.dayEntries {
+    margin-bottom: var(--space-lg);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.dayEntriesHeader {
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-tertiary);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-default);
+}
+
+/* ── Entry detail page ───────────────────────────────────────────────── */
+
+.detailPage {
+    min-height: 100vh;
+    padding: var(--space-2xl) var(--space-lg) var(--space-xl);
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.detailHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+    flex-wrap: wrap;
+}
+
+.backBtn {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    transition: color var(--transition-base);
+}
+
+.backBtn:hover {
+    color: var(--accent-primary);
+}
+
+.detailActions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-left: auto;
+}
+
+.detailTitle {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 var(--space-sm);
+}
+
+.detailMeta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-xl);
+}
+
+.detailDate {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+.detailContent {
+    font-size: var(--font-size-base);
+    line-height: 1.8;
+    color: var(--text-primary);
+    margin-bottom: var(--space-xl);
+}
+
+.detailContent p { margin: 0 0 var(--space-sm); }
+.detailContent ul, .detailContent ol { padding-left: 1.5rem; margin-bottom: var(--space-sm); }
+
+/* Toggle public */
+.publicToggle {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-lg);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-lg);
+}
+
+.toggleLabel {
+    flex: 1;
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.toggle {
+    position: relative;
+    width: 40px;
+    height: 22px;
+    cursor: pointer;
+}
+
+.toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggleSlider {
+    position: absolute;
+    inset: 0;
+    background: var(--border-default);
+    border-radius: 999px;
+    transition: background var(--transition-base);
+}
+
+.toggleSlider::before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 3px;
+    bottom: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: transform var(--transition-base);
+}
+
+.toggle input:checked + .toggleSlider {
+    background: var(--accent-primary);
+}
+
+.toggle input:checked + .toggleSlider::before {
+    transform: translateX(18px);
+}
+
+.toggleLoading {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    padding: 4px 8px;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-sm);
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--border-default);
+    border-top-color: var(--accent-primary);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
+}
+
+.rejectionNote {
+    padding: var(--space-sm) var(--space-md);
+    background: color-mix(in srgb, var(--accent-alert) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent-alert) 30%, transparent);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+    margin-top: var(--space-sm);
+}
+
+/* ── Form (new / edit) ───────────────────────────────────────────────── */
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.formTagsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-md);
+}
+
+.formActions {
+    display: flex;
+    gap: var(--space-sm);
+    justify-content: flex-end;
+}
+
+@media (max-width: 600px) {
+    .page, .detailPage {
+        padding: var(--space-lg) var(--space-md);
+    }
+    .calendarCell {
+        font-size: 11px;
+    }
+    .detailHeader {
+        gap: var(--space-sm);
+    }
+}

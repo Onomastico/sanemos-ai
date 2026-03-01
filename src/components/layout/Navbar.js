@@ -116,6 +116,12 @@ export default function Navbar() {
                                     <button className={styles.navLink} onClick={() => navigateTo('/chat')}>
                                         {t('chat')}
                                     </button>
+                                    <button className={styles.navLink} onClick={() => navigateTo('/letters')}>
+                                        {t('letters')}
+                                    </button>
+                                    <button className={styles.navLink} onClick={() => navigateTo('/journal')}>
+                                        {t('journal')}
+                                    </button>
                                     <button className={styles.navLink} onClick={() => navigateTo('/companions')}>
                                         {t('companions')}
                                     </button>

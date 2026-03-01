@@ -28,7 +28,9 @@
         "dashboard": "Panel",
         "admin": "Admin",
         "profile": "Perfil",
-        "companions": "Compañeros de IA"
+        "companions": "Compañeros de IA",
+        "journal": "Diario",
+        "letters": "Cartas"
     },
     "landing": {
         "heroTitle": "Sanar comienza cuando no estás solo/a",
@@ -347,7 +349,36 @@
         "linksSupport": "Apóyanos",
         "linkRules": "Normas de la Comunidad",
         "linkTerms": "Términos y Condiciones",
+        "linkPrivacy": "Política de Privacidad",
+        "linkArco": "Derechos ARCO",
+        "linkModerationPolicy": "Política de Moderación",
+        "linkAppeal": "Apelar una Decisión",
         "linkDonate": "Hacer una donación",
-        "linkContact": "Contacto"
+        "linkContact": "Contacto",
+        "linksCommunity": "Comunidad",
+        "linkVolunteer": "Ser voluntario/a",
+        "linkCommunityJournals": "Diarios de la Comunidad",
+        "linkLetters": "Cartas de la Comunidad"
+    },
+    "letters": {
+        "title": "Cartas",
+        "subtitle": "Palabras escritas desde el duelo, para quien las necesita",
+        "newLetter": "Escribir una carta",
+        "readFull": "Leer carta completa →",
+        "dailyLetter": "Una carta para ti",
+        "statusPending": "En revisión ⏳",
+        "statusApproved": "Pública ✅",
+        "statusRejected": "Rechazada ❌",
+        "rejectionNote": "Razón del rechazo",
+        "deleteConfirm": "¿Eliminar esta carta?",
+        "comments": "Comentarios",
+        "addComment": "Agregar comentario",
+        "noLetters": "Aún no hay cartas aprobadas.",
+        "filterLossType": "Tipo de pérdida",
+        "filterWorldview": "Cosmovisión",
+        "filterAll": "Todas",
+        "loadMore": "Cargar más",
+        "hintText": "Las cartas son mensajes breves para quienes están atravesando el duelo. Comparte desde tu experiencia — tus palabras pueden acompañar a alguien que las necesita.",
+        "reviewWarning": "Tu carta pasará por una revisión antes de ser visible para la comunidad."
     }
 }

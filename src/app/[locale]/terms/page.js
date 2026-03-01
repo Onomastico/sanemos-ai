@@ -5,6 +5,10 @@ import styles from '@/app/[locale]/page.module.css';
 
 const SECTIONS_ES = [
     {
+        title: '0. Identificación del Responsable',
+        content: `sanemos.ai es una plataforma digital de apoyo emocional operada por un equipo independiente con sede en la República de Chile.\n\nDomicilio legal: República de Chile.\nCorreo de contacto: contacto@sanemos.ai\n\nEl servicio es de acceso gratuito. sanemos.ai no persigue fines de lucro comercial en su operación principal. En la medida que se reciban donaciones voluntarias de usuarios, éstas se destinan íntegramente al mantenimiento y mejora de la plataforma. sanemos.ai no recibe remuneración de terapeutas, profesionales de salud mental ni de ningún tercero por su inclusión en el directorio.`,
+    },
+    {
         title: '1. Aceptación de los Términos',
         content: `Al registrarte y usar sanemos.ai, confirmas que has leído, comprendido y aceptas estos Términos y Condiciones de Uso ("Términos"), así como nuestra Política de Privacidad y las Normas de la Comunidad. Si no estás de acuerdo con alguna de estas condiciones, no debes usar este servicio.`,
     },
@@ -60,9 +64,21 @@ const SECTIONS_ES = [
         title: '14. Contacto',
         content: `Para consultas, reclamos o ejercicio de derechos sobre estos Términos o la Política de Privacidad, escríbenos a:\n\ncorreo: contacto@sanemos.ai\n\nNos comprometemos a responder en un plazo de 15 días hábiles.`,
     },
+    {
+        title: '15. Propiedad Intelectual y Notificación de Infracciones',
+        content: `El nombre "sanemos.ai", el logotipo y el diseño de la plataforma son propiedad de sus operadores. El contenido publicado por los usuarios permanece bajo la titularidad de sus autores, quienes otorgan a sanemos.ai únicamente la licencia descrita en la sección 5.\n\nSi crees que tu contenido ha sido reproducido en esta plataforma de manera que infringe tus derechos de autor, envíanos una notificación a contacto@sanemos.ai con: identificación del contenido protegido, identificación del contenido infractor, tus datos de contacto y una declaración de buena fe. Procesaremos tu solicitud en 10 días hábiles.`,
+    },
+    {
+        title: '16. Eliminación de Cuenta y Portabilidad de Datos',
+        content: `Puedes eliminar tu cuenta desde la configuración de tu perfil. Los datos personales serán borrados en un máximo de 30 días.\n\nSi deseas exportar tu contenido antes de eliminar la cuenta, escríbenos a contacto@sanemos.ai. Te enviaremos un archivo con tus datos en un plazo de 15 días hábiles, de forma gratuita.\n\nPara solicitar eliminación sin acceso activo, usa el formulario ARCO disponible en la plataforma.`,
+    },
 ];
 
 const SECTIONS_EN = [
+    {
+        title: '0. Responsible Party Identification',
+        content: `sanemos.ai is a digital emotional support platform operated by an independent team based in the Republic of Chile.\n\nLegal domicile: Republic of Chile.\nContact email: contacto@sanemos.ai\n\nThe service is free to access. sanemos.ai does not pursue commercial profit in its core operation. To the extent that voluntary donations are received from users, these are allocated entirely to the maintenance and improvement of the platform. sanemos.ai does not receive remuneration from therapists, mental health professionals, or any third party in exchange for inclusion in the directory.`,
+    },
     {
         title: '1. Acceptance of Terms',
         content: `By registering and using sanemos.ai, you confirm that you have read, understood, and agree to these Terms and Conditions of Use ("Terms"), as well as our Privacy Policy and Community Guidelines. If you disagree with any of these conditions, you must not use this service.`,
@@ -118,6 +134,14 @@ const SECTIONS_EN = [
     {
         title: '14. Contact',
         content: `For inquiries, complaints, or the exercise of rights under these Terms or the Privacy Policy, write to us at:\n\nEmail: contacto@sanemos.ai\n\nWe are committed to responding within 15 business days.`,
+    },
+    {
+        title: '15. Intellectual Property and Infringement Notice',
+        content: `The name "sanemos.ai", the logo, and platform design are owned by their operators. User-published content remains under the ownership of its authors, who grant sanemos.ai only the license described in section 5.\n\nIf you believe your content has been reproduced on this platform in a way that infringes your copyright, send us a notification at contacto@sanemos.ai with: identification of the protected content, identification of the allegedly infringing content, your contact information, and a good-faith declaration. We will process your request within 10 business days.`,
+    },
+    {
+        title: '16. Account Deletion and Data Portability',
+        content: `You may delete your account at any time from your profile settings. Personal data will be deleted within a maximum of 30 days.\n\nIf you wish to export your content before deleting your account, write to contacto@sanemos.ai. We will send you a file with your data within 15 business days, free of charge.\n\nTo request deletion without active access, use the ARCO form available on the platform.`,
     },
 ];
 

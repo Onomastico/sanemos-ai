@@ -304,6 +304,34 @@ export async function moderateTherapist(therapist, adminClient) {
     }
 }
 
+const JOURNAL_PROMPT = `You are a content moderator for sanemos.ai, a grief support platform. Your job is to review journal entries that users want to share publicly in the "Community Journals" section.
+
+ABOUT THE PLATFORM:
+sanemos.ai helps people dealing with grief and loss. The community journals section is a space for authentic personal expression — people sharing their grief journey with others who understand.
+
+APPROVE if:
+- It is a genuine personal reflection about loss, grief, emotions, healing, or life experiences
+- Creative writing, poetry, or storytelling related to personal experience
+- Content that is painful, sad, or even dark — this is a grief platform
+- The content, even if imperfect, reads like a real person expressing themselves
+
+REJECT if:
+- It is clearly spam, advertising, or commercial promotion
+- It contains hate speech, slurs, or content targeting a specific person or group
+- It contains explicit sexual content
+- It shares another person's private information without consent
+- It is completely incoherent gibberish with no real message
+
+Set decision to "pending" (escalate to human) if:
+- The content is ambiguous and you cannot confidently classify it
+- It contains mentions of active crisis (e.g., "I am going to hurt myself right now") — note in the reason that it may need immediate support
+- You are genuinely unsure
+
+IMPORTANT: When in doubt, escalate to pending. Do NOT reject content just because it is emotionally intense — grief is intense.
+
+Respond with ONLY valid JSON, no explanation, no markdown, no code blocks:
+{"decision":"approve","reason":"brief reason in the same language as the entry","confidence":0.90}`;
+
 // Threshold for chat violations — low enough to catch clear harassment in any language
 const MESSAGE_VIOLATION_THRESHOLD = 0.75;
 
@@ -320,6 +348,85 @@ function applyMessageDecision(parsed) {
         return { decision: 'warn', reason, confidence };
     }
     return { decision: 'pass', reason, confidence };
+}
+
+/**
+ * Moderates a journal entry that a user wants to make public.
+ * Never auto-rejects — worst case escalates to human review.
+ * @param {{ title?: string, content: string }} entry - The journal entry
+ * @param {Object} adminClient - Supabase admin client
+ * @returns {{ decision: string, reason: string, confidence: number, autoApprove: boolean }}
+ */
+export async function moderateJournal(entry, adminClient) {
+    try {
+        const enabled = await isFlagEnabled(adminClient, 'moderation_journal_enabled');
+        if (!enabled) return { decision: 'approve', reason: 'Moderation disabled', confidence: 1, autoApprove: true };
+
+        const contentObj = {
+            title: entry.title || '',
+            content: entry.content || '',
+        };
+
+        const parsed = await callModerationAI(adminClient, JOURNAL_PROMPT, contentObj);
+        return applyDecisionLogic(parsed);
+    } catch (err) {
+        console.error('[moderation] moderateJournal error:', err);
+        return SAFE_FALLBACK;
+    }
+}
+
+const LETTER_PROMPT = `You are a content moderator for sanemos.ai, a grief support platform. Your job is to review letters that users want to share publicly in the "Community Letters" section.
+
+ABOUT THE PLATFORM:
+sanemos.ai helps people dealing with grief and loss. The letters section is a space for heartfelt short messages — words of comfort, reflections on loss, encouragement from one grieving person to another.
+
+APPROVE if:
+- It is a genuine personal reflection on loss, grief, healing, or human connection
+- Words of comfort, encouragement, or empathy for others going through grief
+- Creative writing, poetry, or personal storytelling related to loss
+- Content that is painful, sad, or emotionally intense — this is a grief platform
+
+REJECT if:
+- It is clearly spam, advertising, or commercial promotion
+- It contains hate speech, slurs, or content targeting a specific person or group
+- It contains explicit sexual content
+- It shares another person's private information without consent
+- It is completely incoherent gibberish with no real message
+
+Set decision to "pending" (escalate to human) if:
+- The content is ambiguous and you cannot confidently classify it
+- It contains mentions of active crisis (e.g., "I am going to hurt myself right now") — note in the reason that it may need immediate support
+- You are genuinely unsure
+
+IMPORTANT: When in doubt, escalate to pending. Do NOT reject content just because it is emotionally intense — grief is intense.
+
+Respond with ONLY valid JSON, no explanation, no markdown, no code blocks:
+{"decision":"approve","reason":"brief reason in the same language as the letter","confidence":0.90}`;
+
+/**
+ * Moderates a letter that a user wants to share publicly.
+ * Never auto-rejects — worst case escalates to human review.
+ * @param {{ content: string, loss_type?: string, worldview?: string }} letter - The letter data
+ * @param {Object} adminClient - Supabase admin client
+ * @returns {{ decision: string, reason: string, confidence: number, autoApprove: boolean }}
+ */
+export async function moderateLetter(letter, adminClient) {
+    try {
+        const enabled = await isFlagEnabled(adminClient, 'moderation_letters_enabled');
+        if (!enabled) return { decision: 'approve', reason: 'Moderation disabled', confidence: 1, autoApprove: true };
+
+        const contentObj = {
+            content: letter.content || '',
+            loss_type: letter.loss_type || '',
+            worldview: letter.worldview || '',
+        };
+
+        const parsed = await callModerationAI(adminClient, LETTER_PROMPT, contentObj);
+        return applyDecisionLogic(parsed);
+    } catch (err) {
+        console.error('[moderation] moderateLetter error:', err);
+        return SAFE_FALLBACK;
+    }
 }
 
 /**

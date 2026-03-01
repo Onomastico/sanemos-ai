@@ -47,6 +47,15 @@ export default function ChatViewPage() {
     const [savingSettings, setSavingSettings] = useState(false);
     const [settingsMessage, setSettingsMessage] = useState('');
 
+    // AI disclaimer (shown once per browser session for AI conversations)
+    const [showDisclaimer, setShowDisclaimer] = useState(false);
+
+    // Report modal
+    const [showReport, setShowReport] = useState(false);
+    const [reportReason, setReportReason] = useState('');
+    const [reportDetails, setReportDetails] = useState('');
+    const [reportStatus, setReportStatus] = useState(null);
+
     const messagesEndRef = useRef(null);
     const messagesContainerRef = useRef(null);
     const inputRef = useRef(null);
@@ -374,6 +383,50 @@ export default function ChatViewPage() {
         });
     };
 
+    // Show AI disclaimer once per session
+    useEffect(() => {
+        if (agent && typeof window !== 'undefined') {
+            if (!localStorage.getItem('ai_disclaimer_v1')) {
+                setShowDisclaimer(true);
+            }
+        }
+    }, [agent]);
+
+    const dismissDisclaimer = () => {
+        localStorage.setItem('ai_disclaimer_v1', '1');
+        setShowDisclaimer(false);
+    };
+
+    const handleReport = async () => {
+        if (!reportReason) return;
+        setReportStatus('sending');
+        try {
+            const res = await fetch('/api/reports', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    content_type: 'chat_message',
+                    content_id: conversationId,
+                    reason: reportReason,
+                    details: reportDetails,
+                }),
+            });
+            if (res.ok) {
+                setReportStatus('sent');
+                setTimeout(() => {
+                    setShowReport(false);
+                    setReportStatus(null);
+                    setReportReason('');
+                    setReportDetails('');
+                }, 2000);
+            } else {
+                setReportStatus('error');
+            }
+        } catch {
+            setReportStatus('error');
+        }
+    };
+
     const handleKeyDown = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
@@ -436,6 +489,17 @@ export default function ChatViewPage() {
                     </button>
                 )}
 
+                {agent && (
+                    <button
+                        className="btn btn-sm"
+                        onClick={() => setShowReport(!showReport)}
+                        title={locale === 'es' ? 'Reportar' : 'Report'}
+                        style={{ color: 'var(--text-muted)' }}
+                    >
+                        ⚑
+                    </button>
+                )}
+
                 <button
                     className="btn btn-sm"
                     onClick={() => {
@@ -451,6 +515,65 @@ export default function ChatViewPage() {
                 >
                     ⚙️
                 </button>
+
+                {/* Report Modal */}
+                {showReport && agent && (
+                    <>
+                        <div className={styles.settingsOverlay} onClick={() => setShowReport(false)} />
+                        <div className={styles.settingsDropdown}>
+                            <h2>⚑ {locale === 'es' ? 'Reportar contenido' : 'Report content'}</h2>
+                            {reportStatus === 'sent' ? (
+                                <p style={{ color: 'var(--accent-calm)', marginTop: 'var(--space-md)' }}>
+                                    {locale === 'es' ? '✅ Reporte enviado. Gracias.' : '✅ Report submitted. Thank you.'}
+                                </p>
+                            ) : (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)', marginTop: 'var(--space-md)' }}>
+                                    <div className="form-group">
+                                        <label className="form-label">{locale === 'es' ? 'Razón *' : 'Reason *'}</label>
+                                        <select className="form-input form-select" value={reportReason} onChange={e => setReportReason(e.target.value)}>
+                                            <option value="">{locale === 'es' ? 'Selecciona una razón' : 'Select a reason'}</option>
+                                            <option value="inappropriate">{locale === 'es' ? 'Contenido inapropiado' : 'Inappropriate content'}</option>
+                                            <option value="self_harm">{locale === 'es' ? 'Autolesión o suicidio' : 'Self-harm or suicide'}</option>
+                                            <option value="misinformation">{locale === 'es' ? 'Desinformación peligrosa' : 'Dangerous misinformation'}</option>
+                                            <option value="harassment">{locale === 'es' ? 'Acoso' : 'Harassment'}</option>
+                                            <option value="spam">Spam</option>
+                                            <option value="other">{locale === 'es' ? 'Otro' : 'Other'}</option>
+                                        </select>
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">{locale === 'es' ? 'Detalles (opcional)' : 'Details (optional)'}</label>
+                                        <textarea
+                                            className="form-input"
+                                            value={reportDetails}
+                                            onChange={e => setReportDetails(e.target.value)}
+                                            rows={3}
+                                            maxLength={500}
+                                            placeholder={locale === 'es' ? 'Describe el problema...' : 'Describe the issue...'}
+                                        />
+                                    </div>
+                                    {reportStatus === 'error' && (
+                                        <p style={{ color: 'var(--accent-alert)', fontSize: 'var(--font-size-sm)' }}>
+                                            {locale === 'es' ? 'Error al enviar. Intenta de nuevo.' : 'Error submitting. Please try again.'}
+                                        </p>
+                                    )}
+                                    <div style={{ display: 'flex', gap: 'var(--space-md)', justifyContent: 'flex-end' }}>
+                                        <button type="button" className="btn" onClick={() => setShowReport(false)}>
+                                            {locale === 'es' ? 'Cancelar' : 'Cancel'}
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="btn btn-primary"
+                                            onClick={handleReport}
+                                            disabled={!reportReason || reportStatus === 'sending'}
+                                        >
+                                            {reportStatus === 'sending' ? '...' : (locale === 'es' ? 'Enviar reporte' : 'Submit report')}
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </>
+                )}
 
                 {/* Settings Dropdown */}
                 {showSettings && (
@@ -536,6 +659,36 @@ export default function ChatViewPage() {
             {/* Body Wrapper */}
             <div className={styles.chatBodyWrapper}>
                 <div className={styles.chatMain}>
+                    {/* AI Disclaimer banner — shown once per browser session */}
+                    {agent && showDisclaimer && (
+                        <div style={{
+                            margin: 'var(--space-sm) var(--space-md) 0',
+                            padding: 'var(--space-sm) var(--space-md)',
+                            background: 'color-mix(in srgb, var(--accent-primary) 8%, var(--bg-secondary))',
+                            border: '1px solid color-mix(in srgb, var(--accent-primary) 25%, transparent)',
+                            borderRadius: 'var(--radius-md)',
+                            fontSize: 'var(--font-size-xs)',
+                            color: 'var(--text-secondary)',
+                            lineHeight: '1.55',
+                            display: 'flex',
+                            alignItems: 'flex-start',
+                            gap: 'var(--space-sm)',
+                        }}>
+                            <span style={{ flexShrink: 0 }}>⚠️</span>
+                            <span style={{ flex: 1 }}>
+                                {locale === 'es'
+                                    ? 'Los compañeros de IA son herramientas de apoyo emocional, NO profesionales de salud mental. Sus respuestas son automáticas y pueden contener errores. En emergencias, llama al 131 (SAMU) o 600 360 7777 (Salud Mental MINSAL).'
+                                    : 'AI companions are emotional support tools, NOT mental health professionals. Their responses are automated and may contain errors. In emergencies, contact emergency services in your country.'}
+                            </span>
+                            <button
+                                onClick={dismissDisclaimer}
+                                style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: 'var(--font-size-xs)', flexShrink: 0, padding: '0 var(--space-xs)', fontWeight: 600 }}
+                            >
+                                {locale === 'es' ? 'Entendido ✕' : 'Got it ✕'}
+                            </button>
+                        </div>
+                    )}
+
                     {/* Messages */}
                     <div className={styles.messagesContainer} ref={messagesContainerRef} onScroll={handleScroll}>
                         {messages.length === 0 && agent && (
